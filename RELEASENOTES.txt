@@ -1,0 +1,125 @@
+manage-skill: note di rilascio
+==============================
+
+1.1.0, 18 ottobre 2026
+----------------------
+
+Prompt per ricreare una skill
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+- ms prompt <skill> e il pulsante Prompt… creano il testo da incollare in Claude per ricreare la skill: istruzioni, albero delle cartelle e contenuto di ogni file. Modalità completa o essenziale, copia negli appunti o salvataggio su file. Le righe con possibili segreti vengono oscurate.
+
+Solo le tue skill, stato di attivazione, lingua
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+- Per una questione di proprietà il programma mostra ed esporta solo le skill dell'utente: le skill di Anthropic su claude.ai e quelle dei plugin dei marketplace non vengono più lette ("solo_utente": true). Dall'esportazione del cloud già fatta sono state tolte le 13 copie di skill Anthropic.
+- Nuova colonna Attiva: attiva, solo manuale, attiva (compatta), disattivata (da skillOverrides dei settings di Claude Code e dal frontmatter), oppure "su claude.ai" quando lo stato si vede solo sul sito.
+- Lingua: italiano e inglese. Menu nella finestra, MANAGE_SKILL_LINGUA=en per la riga di comando, dizionario unico manageskill/lingue/en.json. Documenti in inglese: MANUAL.en.txt, RELEASENOTES.en.txt, COPYRIGHT bilingue.
+
+Licenza e copyright
+~~~~~~~~~~~~~~~~~~~
+- manage-skill è distribuito secondo la GNU GPL v3 o successiva (GPL-3.0-or-later): file LICENSE, file COPYRIGHT con i componenti di terze parti, intestazione SPDX in ogni file sorgente.
+- ms --versione e il pulsante Informazioni della finestra mostrano versione, copyright e licenza.
+
+Icona e aspetto
+~~~~~~~~~~~~~~~
+- Nuova icona dell'applicazione (gui-qt/risorse/manage-skill.svg), usata dalla finestra e installata da compila.sh insieme alla voce nel menu delle applicazioni.
+- Interfaccia ridisegnata:
+  - barra d'intestazione con logo e contatori (skill, tue, da allineare, terze parti);
+  - schede, tabelle, campi e pulsanti più curati, con i pulsanti principali e quelli che cancellano evidenziati;
+  - tema chiaro e scuro che segue il sistema, o si sceglie con MANAGE_SKILL_TEMA;
+  - colori di stato leggibili in entrambi i temi.
+- Le funzioni descritte sotto (note, editor, terze parti, Claude Console, copie più recenti, da claude.ai alla API) fanno parte di questa versione.
+
+1.0.0, 18 ottobre 2026
+----------------------
+
+Prima versione. Le sezioni che seguono descrivono anche le aggiunte arrivate con la 1.1.0.
+
+Catalogo
+~~~~~~~~
+- Trova le skill in cinque fonti:
+  - Claude Code (~/.claude/skills, anche quando la skill è un collegamento a un progetto);
+  - le skill di progetto (<progetto>/.claude/skills);
+  - i plugin installati;
+  - la copia sincronizzata dell'account claude.ai;
+  - l'archivio delle esportazioni.
+- Raggruppa le copie per nome, assegna una categoria e segnala quando le copie hanno contenuti diversi (impronta SHA-256 dei file).
+- Le categorie si assegnano per parole intere, con punteggio sul nome e sulla descrizione. Regole e assegnazioni manuali stanno in dati/categorie.json.
+- Produce catalogo/catalogo.html (schede con ricerca) e catalogo/catalogo.json.
+- Altri comandi: descrivi (scheda completa), confronta (differenze file per file), valida (regole della Skills API) e segreti (controllo di chiavi, token e password).
+
+Skill del cloud
+~~~~~~~~~~~~~~~
+- ms cloud elenco mostra le skill dell'account claude.ai con:
+  - il tipo (tua, Anthropic, esempio Anthropic);
+  - l'id claude.ai;
+  - la data di aggiornamento;
+  - il confronto con la copia locale.
+- ms cloud esporta fotografa su richiesta le skill in manageskill/archivio/cloud/<account>/<data-ora>/. Per ogni esportazione crea:
+  - le cartelle delle skill;
+  - gli ZIP;
+  - indice.json e indice.html;
+  - il collegamento ultima.
+- Ogni esportazione indica quali skill sono nuove o cambiate rispetto alla precedente.
+- ms cloud storico elenca le esportazioni.
+- --api aggiunge i metadati delle skill negli account API.
+
+Esportazione e importazione
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+- esporta salva in manageskill/archivio/<nome>/<data-ora>/ la cartella, lo ZIP e skill.json.
+- importa porta una skill in un account:
+  - api: crea la skill con la Skills API, o una nuova versione se esiste già, e accetta --prova;
+  - claude-code: copia nella cartella. Se la skill c'è già identica non fa nulla; se è diversa si ferma, a meno di --sovrascrivi, che prima salva la copia attuale in archivio;
+  - claude-ai: prepara lo ZIP da caricare a mano su claude.ai.
+- Accetta come origine un nome, una cartella, uno ZIP o una cartella di archivio.
+- Il controllo dei segreti blocca l'esportazione e l'importazione, a meno di --ignora-segreti.
+
+Account e chiavi
+~~~~~~~~~~~~~~~~
+- Account di tre tipi: api, claude-code e claude-ai. Il registro dati/account.json non contiene chiavi.
+- La chiave può stare in:
+  - il portachiavi di sistema (secret-tool);
+  - un file protetto in ~/.config/manage-skill/chiavi (600/700);
+  - una variabile d'ambiente;
+  - il profilo della CLI ant.
+- La chiave si inserisce senza eco e non viene mai stampata.
+- remoto elenco, remoto versioni e remoto elimina gestiscono le skill negli account API. L'eliminazione chiede di scrivere SI.
+
+Interfaccia di gestione
+~~~~~~~~~~~~~~~~~~~~~~~
+- manage-skill-qt è una finestra nativa in C++ con Qt 6, con le schede Catalogo, Cloud claude.ai, Account e chiavi, Esportazioni. In basso c'è il registro delle operazioni.
+- Non c'è nessun server e nessuna porta: ogni operazione avvia il motore Python (manageskill/motore.py) e scambia JSON sullo standard input e output.
+- La chiave si inserisce in un campo password, passa solo dallo standard input e non torna mai alla finestra.
+- Si compila con gui-qt/compila.sh (servono qt6-base-dev e cmake).
+
+Copie e versioni più recenti
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+- Quando le copie di una skill hanno contenuti diversi, il catalogo indica la più recente (★) e dove si trova. Per le copie di claude.ai la data è quella di aggiornamento sul cloud.
+- La finestra Qt mostra sotto il catalogo tutte le copie della skill selezionata, con data, stato e cartella.
+
+Account della Claude Console
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+- ms account console e il pulsante "Configura account API (Claude Console)" provano la chiave sulla Skills API e la salvano, nel portachiavi o nel file protetto, solo se funziona. Le chiavi Admin vengono rifiutate.
+- "Scansiona le skill degli account API" elenca le skill della Console e indica se esistono anche sul PC o su claude.ai.
+
+Da claude.ai alla Claude API
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+- ms cloud verso-api <account> e il pulsante "Importa in account API" portano le skill di claude.ai in un account API: creano quelle nuove, aggiungono una versione a quelle cambiate e saltano quelle uguali (registro in dati/sincronizzazioni.json). Accettano --prova e segnalano quando sul PC c'è una versione più recente.
+
+Note, modifica e terze parti
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+- Note sulle skill (dati/note.json), dalla finestra o con ms nota.
+- Editor delle skill nella finestra: modifica e crea file nelle copie di claude-code, dei progetti e delle terze parti. Prima di ogni salvataggio fa una copia in archivio, rifiuta il salvataggio se il file è cambiato su disco e ricontrolla la skill dopo il salvataggio. Le altre copie si aprono in sola lettura.
+- Skill di terze parti da Git, ZIP o cartella (ms terze, scheda Terze parti):
+  - anteprima con il numero di script e di possibili segreti;
+  - aggiornamento dalla sorgente, che protegge le modifiche fatte qui;
+  - destinazioni per ogni skill e sincronizzazione verso claude-code, api e claude-ai, che protegge le modifiche fatte a mano negli account.
+- Le esportazioni stanno in manageskill/archivio/, le terze parti in manageskill/terze-parti/.
+
+Limiti noti
+~~~~~~~~~~~
+- Cloud claude.ai:
+  - non esiste un'API pubblica per scaricare o caricare le skill di claude.ai. L'esportazione usa la copia che Claude Code sincronizza, aggiornata all'ultima apertura di Claude Code (data mostrata nel catalogo);
+  - lo stato attiva/disattiva delle skill di claude.ai non è nella copia sincronizzata: si vede solo sul sito;
+  - l'importazione verso claude.ai prepara lo ZIP, che va caricato a mano.
+- Skills API: non permette di scaricare i file di una skill. Degli account API si vedono solo nome, id e versioni.
+- Lingua: i nomi dei comandi e delle opzioni restano in italiano; i cataloghi HTML generati (catalogo.html, indice.html) sono in italiano.
