@@ -1,0 +1,15 @@
+# Ambiente e compilazione
+.venv/
+__pycache__/
+*.pyc
+gui-qt/build/
+
+# Dati personali: account, note, catalogo, esportazioni e skill di terze parti
+dati/
+catalogo/
+manageskill/archivio/
+manageskill/terze-parti/
+
+# Chiavi e segreti (non dovrebbero mai stare qui: stanno nel keyring o in ~/.config/manage-skill)
+.env
+*.key
