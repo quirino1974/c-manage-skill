@@ -4,6 +4,9 @@ Author: Quirino Scaramastra
 
 24 October 2026
 ---------------
+- Anthropic's skills can no longer be exported or imported, from any source: the "solo_utente" setting is gone, as are the --tutte options of ms esporta, ms importa, ms cloud esporta and ms cloud verso-api and the Export all button in the window.
+- A skill under Anthropic's proprietary license ("Anthropic, PBC. All rights reserved." in its LICENSE file) is recognized and refused even when copied to another folder, given as a path or ZIP, or found in a third-party source.
+- Marketplace plugins are never read.
 - Documentation uses the standard names: README.txt, RELEASE-NOTES.txt and RELEASE-NOTES.en.txt.
 - New PREREQUISITES.txt file with the system, software and packages needed.
 

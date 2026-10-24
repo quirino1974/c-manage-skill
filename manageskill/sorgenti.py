@@ -25,7 +25,22 @@ class Voce:
     extra: dict = None
 
 
+def di_anthropic(cartella: Path) -> bool:
+    """Skill di Anthropic con licenza proprietaria ("Anthropic, PBC. All rights reserved." nel file di licenza).
+    Non è dell'utente e non si può ridistribuire: manage-skill non la legge, da nessuna fonte."""
+    for nome in ("LICENSE.txt", "LICENSE", "LICENSE.md"):
+        try:
+            testo = (cartella / nome).read_text(encoding="utf-8", errors="ignore")[:4000]
+        except OSError:
+            continue
+        if "Anthropic, PBC" in testo and "all rights reserved" in testo.lower():
+            return True
+    return False
+
+
 def _carica(cartella: Path, fonte: str, origine: str, sola_lettura=False, extra=None):
+    if di_anthropic(cartella):
+        return None
     try:
         s = sk.carica(cartella)
     except (FileNotFoundError, OSError):
@@ -71,19 +86,9 @@ def progetti(radici=None):
 
 
 def plugin(cartella: Path = HOME_CLAUDE / "plugins"):
-    """Skill dei plugin installati (sola lettura: si aggiornano dal loro marketplace)."""
-    voci = []
-    if impostazioni()["solo_utente"] or not cartella.exists():  # plugin dei marketplace: non sono dell'utente
-        return voci
-    for md in sorted(cartella.glob("**/skills/*/SKILL.md")):
-        if "/synced/" in str(md):
-            continue
-        parti = md.parts
-        nome_plugin = parti[parti.index("skills") - 1] if "skills" in parti else ""
-        v = _carica(md.parent, "plugin", "plugin", sola_lettura=True, extra={"plugin": nome_plugin})
-        if v:
-            voci.append(v)
-    return voci
+    """Skill dei plugin dei marketplace (anche quelli di Anthropic): non sono dell'utente, quindi non si leggono.
+    La fonte resta nell'elenco per compatibilità con i comandi che la nominano."""
+    return []
 
 
 def claude_ai(cartella: Path = HOME_CLAUDE / "skills" / "synced"):
@@ -101,9 +106,9 @@ def claude_ai(cartella: Path = HOME_CLAUDE / "skills" / "synced"):
                 continue
             info = manifest.get(d.name, {})
             src = info.get("source", "")
-            origine = "anthropic" if src.startswith("anthropic") else "tua"
-            if origine != "tua" and impostazioni()["solo_utente"]:
+            if src.startswith("anthropic"):  # skill di Anthropic su claude.ai: non si esportano
                 continue
+            origine = "tua"
             v = _carica(d, "claude-ai", origine, sola_lettura=True,
                         extra={"skill_id": info.get("skillId", ""), "aggiornata_claude_ai": info.get("updatedAt", ""),
                                "account": conto.name, "tipo_claude_ai": src})

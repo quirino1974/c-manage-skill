@@ -39,13 +39,13 @@ Aiuto: ms --help e ms <comando> --help. Versione: ms --versione.
 3. Da dove legge le skill (fonti)
 ---------------------------------
 
-Solo le tue skill. Per evitare problemi di proprietà, il programma mostra ed esporta soltanto le skill create da te (e quelle di terze parti che aggiungi tu, con la loro licenza). Le skill di Anthropic presenti su claude.ai e quelle dei plugin dei marketplace non vengono lette. L'impostazione è "solo_utente": true in dati/config.json (predefinita); mettendola a false torna la vista completa, sotto la tua responsabilità.
+Solo le tue skill. Per evitare problemi di proprietà, il programma mostra ed esporta soltanto le skill create da te (e quelle di terze parti che aggiungi tu, con la loro licenza). Le skill di Anthropic non vengono mai lette né esportate, da nessuna fonte: né quelle presenti su claude.ai né quelle dei plugin dei marketplace, e nemmeno una loro copia in un'altra cartella (il programma riconosce la licenza di Anthropic nel file LICENSE della skill). Sono soggette alla licenza di Anthropic e non si possono ridistribuire.
 
   Fonte         Dove                                                                          Modificabile
   -----------   ---------------------------------------------------------------------------   ------------
   claude-code   ~/.claude/skills/<nome> (anche collegamenti ai progetti)                      sì
   progetto      <progetto>/.claude/skills/<nome> sotto le cartelle di radici_progetti (§11)   sì
-  plugin        ~/.claude/plugins/**/skills/<nome> (letta solo con "solo_utente": false)      no
+  plugin        ~/.claude/plugins/**/skills/<nome>: non viene letta (plugin dei marketplace)     no
   claude-ai     ~/.claude/skills/synced/<account>/, la copia sincronizzata da Claude Code     no
   archivio      manageskill/archivio/<nome>/<data>/<nome>                                     no
 
@@ -136,7 +136,7 @@ Per fissare a mano la categoria di una skill:
 5. Skill del cloud (account claude.ai)
 --------------------------------------
 
-Con "solo_utente": true (predefinito) qui compaiono ed escono solo le tue skill: le opzioni --tutte non aggiungono quelle di Anthropic.
+Qui compaiono ed escono solo le tue skill: quelle di Anthropic presenti su claude.ai non vengono lette.
 
 claude.ai non ha un'API pubblica per scaricare le skill. Claude Code però ne tiene una copia sincronizzata sul PC, e manage-skill lavora su quella. La data di sincronizzazione compare in ogni elenco: per avere l'ultima versione apri Claude Code prima di esportare.
 
@@ -156,7 +156,6 @@ ms cloud esporta
 Esporta su richiesta nella sottocartella manageskill/archivio/cloud/ del programma:
 
     ms cloud esporta --mie                    # tutte le tue
-    ms cloud esporta --tutte                  # anche quelle di Anthropic
     ms cloud esporta altra-skill     # solo alcune, per nome
 
 Ogni esportazione crea:
@@ -172,14 +171,14 @@ Alla fine il comando elenca le skill nuove o cambiate rispetto all'esportazione 
 
 Una skill con possibili segreti viene saltata e segnalata, mentre le altre vengono esportate lo stesso. Se l'avviso è un falso allarme, rilancia con --ignora-segreti.
 
-ms cloud verso-api <account> [skill…] [--prova] [--forza] [--tutte] [--ignora-segreti]
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ms cloud verso-api <account> [skill…] [--prova] [--forza] [--ignora-segreti]
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Importa automaticamente le skill di claude.ai in un account API della Claude Console:
 - una skill che nell'account manca viene creata;
 - una skill già presente e cambiata da quando manage-skill l'ha caricata l'ultima volta diventa una nuova versione;
 - una skill uguale viene saltata ("già aggiornata"). Con --forza viene ricaricata comunque.
 
-Senza nomi prende tutte le tue skill, con --tutte anche quelle di Anthropic. Le skill con possibili segreti o che non rispettano le regole della Skills API vengono saltate e segnalate.
+Senza nomi prende tutte le tue skill. Le skill con possibili segreti o che non rispettano le regole della Skills API vengono saltate e segnalate.
 
 Il comando segnala anche quando sul PC c'è una versione più recente di quella su claude.ai: in quel caso valuta di aggiornare prima claude.ai, oppure usa ms importa <nome> --verso <account>, che carica la copia del PC.
 
@@ -201,8 +200,8 @@ Elenca le esportazioni presenti in manageskill/archivio/cloud/ con queste inform
 6. Esportazione in archivio
 ---------------------------
 
-ms esporta <skill…> | --mie | --tutte [--da FONTE] [--ignora-segreti]
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ms esporta <skill…> | --mie [--da FONTE] [--ignora-segreti]
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Crea manageskill/archivio/<nome>/<data-ora>/ con:
 - la cartella della skill;
 - <nome>.zip;
@@ -238,7 +237,7 @@ ms importa <skill…> --verso ACCOUNT [opzioni]
   --prova            mostra cosa farebbe, senza modificare nulla
   --sovrascrivi      solo per claude-code, vedi sopra
   --da FONTE         da quale copia prendere la skill
-  --mie, --tutte     importa tutte le tue skill, o anche quelle di Anthropic
+  --mie              importa tutte le tue skill
   --ignora-segreti   procede anche con avvisi del controllo dei segreti
 
 Esempi:
@@ -371,14 +370,12 @@ Le traduzioni stanno in manageskill/lingue/en.json, un solo dizionario per fines
       "radici_progetti": ["/home/utente/progetti", "/home/utente/Documents/GitHub"],
       "escludi": ["node_modules", ".git", ".venv", "venv", "__pycache__", "data", "archivio"],
       "limite_mb": 30,
-      "solo_utente": true,
       "lingua": "it"
     }
 
 - radici_progetti: dove cercare le cartelle .claude/skills; se manca dati/config.json si usa ~/claudeworkspace;
 - escludi: cartelle da non esplorare;
 - limite_mb: dimensione massima per la Skills API;
-- solo_utente: mostra solo le tue skill (vedi §3);
 - lingua: it o en per la riga di comando.
 
 12. Flussi tipici

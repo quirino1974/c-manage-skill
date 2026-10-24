@@ -43,13 +43,13 @@ Help: ms --help and ms <command> --help. Version: ms --versione.
 3. Where skills are read from (sources)
 ---------------------------------------
 
-Only your skills. To avoid ownership problems, the program shows and exports only the skills you created (plus the third-party skills you add yourself, with their license). Anthropic's skills on claude.ai and the skills of marketplace plugins are not read. The setting is "solo_utente": true in dati/config.json (default); setting it to false restores the full view, at your own responsibility.
+Only your skills. To avoid ownership problems, the program shows and exports only the skills you created (plus the third-party skills you add yourself, with their license). Anthropic's skills are never read or exported, from any source: not the ones on claude.ai, not the ones in marketplace plugins, and not a copy of them in another folder (the program recognizes Anthropic's license in the skill's LICENSE file). They are subject to Anthropic's license and cannot be redistributed.
 
   Source        Where                                                                      Editable
   -----------   ------------------------------------------------------------------------   --------
   claude-code   ~/.claude/skills/<name> (including links to projects)                      yes
   progetto      <project>/.claude/skills/<name> under the radici_progetti folders (§11)    yes
-  plugin        ~/.claude/plugins/**/skills/<name> (read only with "solo_utente": false)   no
+  plugin        ~/.claude/plugins/**/skills/<name>: not read (marketplace plugins)          no
   claude-ai     ~/.claude/skills/synced/<account>/, the copy synced by Claude Code         no
   terze-parti   manageskill/terze-parti/<name>                                             yes
   archivio      manageskill/archivio/<name>/<date>/<name>                                  no
@@ -142,7 +142,7 @@ To pin a skill's category by hand:
 5. Cloud skills (claude.ai account)
 -----------------------------------
 
-With "solo_utente": true (default) only your skills appear and are exported here: the --tutte options do not add Anthropic's.
+Only your skills appear and are exported here: Anthropic's skills on claude.ai are not read.
 
 claude.ai has no public API to download skills. Claude Code, however, keeps a synced copy on the PC, and manage-skill works on that. The sync date appears in every listing: for the latest version, open Claude Code before exporting.
 
@@ -177,8 +177,8 @@ At the end the command lists the skills that are new or changed since the previo
 
 A skill with possible secrets is skipped and reported, while the others are exported anyway. If the warning is a false alarm, run again with --ignora-segreti.
 
-ms cloud verso-api <account> [skill…] [--prova] [--forza] [--tutte] [--ignora-segreti]
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ms cloud verso-api <account> [skill…] [--prova] [--forza] [--ignora-segreti]
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Automatically imports the claude.ai skills into a Claude Console API account:
 - a skill missing from the account is created;
 - a skill already there and changed since manage-skill last uploaded it becomes a new version;
@@ -206,8 +206,8 @@ Lists the exports in manageskill/archivio/cloud/ with:
 6. Export to the archive
 ------------------------
 
-ms esporta <skill…> | --mie | --tutte [--da SOURCE] [--ignora-segreti]
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ms esporta <skill…> | --mie [--da SOURCE] [--ignora-segreti]
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Creates manageskill/archivio/<name>/<date-time>/ with:
 - the skill folder;
 - <name>.zip;
@@ -243,7 +243,7 @@ ms importa <skill…> --verso ACCOUNT [options]
   --prova            show what it would do, without changing anything
   --sovrascrivi      claude-code only, see above
   --da SOURCE        which copy to take the skill from
-  --mie, --tutte     import all your skills
+  --mie              import all your skills
   --ignora-segreti   proceed even with secret check warnings
 
 Examples:
@@ -379,14 +379,12 @@ Translations are in manageskill/lingue/en.json, a single dictionary for window, 
       "radici_progetti": ["/home/user/projects", "/home/user/Documents/GitHub"],
       "escludi": ["node_modules", ".git", ".venv", "venv", "__pycache__", "data", "archivio"],
       "limite_mb": 30,
-      "solo_utente": true,
       "lingua": "en"
     }
 
 - radici_progetti: where to look for .claude/skills folders; without dati/config.json the default is ~/claudeworkspace;
 - escludi: folders not to explore;
 - limite_mb: maximum size for the Skills API;
-- solo_utente: show only your skills (see §3);
 - lingua: it or en for the command line.
 
 12. Typical workflows

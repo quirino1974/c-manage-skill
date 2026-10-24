@@ -15,7 +15,7 @@ manage-skill trova le tue skill di Claude ovunque si trovino (Claude Code, proge
 - Terze parti: aggiunge skill da Git, ZIP o cartella e le tiene aggiornate.
 - Interfaccia: riga di comando ms e finestra nativa C++/Qt 6, in italiano e in inglese. Nessun server.
 
-Per proprietà, il programma mostra ed esporta solo le skill dell'utente, non quelle di Anthropic né dei plugin dei marketplace.
+Per proprietà, il programma mostra ed esporta solo le skill dell'utente: le skill di Anthropic, con la loro licenza proprietaria, e quelle dei plugin dei marketplace non vengono mai lette né esportate.
 
 Installazione / Installation
 ----------------------------

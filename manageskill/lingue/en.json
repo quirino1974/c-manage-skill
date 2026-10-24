@@ -559,6 +559,10 @@
    "\\1 skills in the cloud. 'local' compares with the Claude Code copy (same, different, missing)."
   ],
   [
+   "(.+?):\\ skill\\ di\\ Anthropic\\ con\\ licenza\\ proprietaria:\\ manage\\-skill\\ non\\ la\\ esporta\\ né\\ la\\ importa",
+   "\\1: Anthropic skill under a proprietary license: manage-skill does not export or import it"
+  ],
+  [
    "(.+?):\\ lo\\ ZIP\\ deve\\ contenere\\ un\\ solo\\ SKILL\\.md\\ \\(alla\\ radice\\ o\\ in\\ una\\ cartella\\)",
    "\\1: the ZIP must contain a single SKILL.md (at the root or in a folder)"
   ],

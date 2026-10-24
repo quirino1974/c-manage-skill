@@ -4,6 +4,9 @@ Autore: Quirino Scaramastra
 
 24 ottobre 2026
 ---------------
+- Le skill di Anthropic non si possono più esportare né importare, da nessuna fonte: tolta l'impostazione "solo_utente", tolte le opzioni --tutte di ms esporta, ms importa, ms cloud esporta e ms cloud verso-api, e il pulsante Esporta tutte della finestra.
+- Una skill con la licenza proprietaria di Anthropic ("Anthropic, PBC. All rights reserved." nel file LICENSE) viene riconosciuta e rifiutata anche se è copiata in un'altra cartella, passata come percorso o ZIP, o si trova in una sorgente di terze parti.
+- I plugin dei marketplace non vengono più letti in nessun caso.
 - Documentazione con i nomi standard: README.txt, RELEASE-NOTES.txt e RELEASE-NOTES.en.txt.
 - Nuovo file PREREQUISITES.txt con sistema, software e pacchetti necessari.
 

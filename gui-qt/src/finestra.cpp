@@ -658,14 +658,12 @@ QWidget *Finestra::creaCloud() {
     auto *aggiorna = new QPushButton(L("Aggiorna"));
     auto *espSel = new QPushButton(L("Esporta selezionate"));
     auto *espMie = new QPushButton(L("Esporta tutte le mie"));
-    auto *espTutte = new QPushButton(L("Esporta tutte"));
     m_cIgnora = new QCheckBox(L("ignora segreti"));
     riga->addWidget(m_cMie);
     riga->addWidget(aggiorna);
     riga->addStretch();
     riga->addWidget(espSel);
     riga->addWidget(espMie);
-    riga->addWidget(espTutte);
     riga->addWidget(m_cIgnora);
     v->addLayout(riga);
     auto *rigaApi = new QHBoxLayout;
@@ -710,7 +708,6 @@ QWidget *Finestra::creaCloud() {
         esportaCloud({{"nomi", QJsonArray::fromStringList(nomi)}});
     });
     connect(espMie, &QPushButton::clicked, this, [this] { esportaCloud({{"mie", true}}); });
-    connect(espTutte, &QPushButton::clicked, this, [this] { esportaCloud({}); });
     connect(caricaApi, &QPushButton::clicked, this, &Finestra::caricaApiCloud);
     connect(m_tabCloud, &QTableWidget::cellDoubleClicked, this, [this](int r, int) {
         auto *d = new DialogoSkill(m_motore, m_tabCloud->item(r, 0)->text(), "claude-ai", this);

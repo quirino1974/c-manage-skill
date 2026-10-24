@@ -339,6 +339,7 @@ MODELLI = {
     "git clone non riuscito: {}": "git clone failed: {1}", "ZIP non sicuro: percorso {}": "Unsafe ZIP: path {1}",
     "Nome di skill non utilizzabile come cartella: {}": "Skill name not usable as a folder: {1}", "Account sconosciuti: {}": "Unknown accounts: {1}",
     "{}: lo ZIP deve contenere un solo SKILL.md (alla radice o in una cartella)": "{1}: the ZIP must contain a single SKILL.md (at the root or in a folder)",
+    "{}: skill di Anthropic con licenza proprietaria: manage-skill non la esporta né la importa": "{1}: Anthropic skill under a proprietary license: manage-skill does not export or import it",
     "{}: manca SKILL.md": "{1}: SKILL.md is missing", "{}: {}": "{1}: {2}",
     "name '{}': solo lettere minuscole, numeri e trattini, massimo 64 caratteri": "name '{1}': lowercase letters, digits and hyphens only, at most 64 characters",
     "name '{}': non può contenere le parole riservate {}": "name '{1}': cannot contain the reserved words {2}",

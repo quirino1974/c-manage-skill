@@ -29,8 +29,6 @@ PREDEFINITA = {
     "escludi": ["node_modules", ".git", ".venv", "venv", "__pycache__", "data", "archivio"],
     # Limiti della Skills API di Anthropic
     "limite_mb": 30,
-    # Proprietà: mostra solo le skill dell'utente (niente skill di Anthropic né plugin dei marketplace)
-    "solo_utente": True,
 }
 
 

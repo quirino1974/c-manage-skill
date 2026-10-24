@@ -110,6 +110,8 @@ def _trova_skill(radice: Path) -> list:
         dirnames[:] = [d for d in dirnames if d not in (".git", *sk.IGNORA)]
         if "SKILL.md" in filenames:
             p = Path(dirpath)
+            if sorgenti.di_anthropic(p):  # licenza proprietaria di Anthropic: non si installa
+                continue
             try:
                 trovate.append((p.relative_to(radice).as_posix() or ".", sk.carica(p)))
             except (OSError, FileNotFoundError):

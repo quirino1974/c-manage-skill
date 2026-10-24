@@ -28,9 +28,9 @@ nell'ambiente .venv.
 
 Le skill gestite dal programma (le tue e quelle di terze parti) NON fanno parte di
 manage-skill e restano sotto la licenza dei rispettivi autori. Le skill di terze parti in
-manageskill/terze-parti/ conservano la licenza indicata nella loro sorgente. Per
-impostazione predefinita ("solo_utente": true) il programma legge ed esporta solo le skill
-dell'utente, non quelle di Anthropic né dei plugin dei marketplace.
+manageskill/terze-parti/ conservano la licenza indicata nella loro sorgente. Il
+programma legge ed esporta solo le skill dell'utente: le skill di Anthropic (con licenza
+proprietaria di Anthropic) e quelle dei plugin dei marketplace non vengono mai lette.
 
 "Claude" e "Anthropic" sono marchi di Anthropic PBC. manage-skill è un progetto indipendente,
 non affiliato ad Anthropic né approvato da Anthropic.
@@ -73,8 +73,8 @@ installed on the system or in the .venv environment.
 The skills managed by the program (yours and those of third parties) are NOT
 part of manage-skill and remain under their authors' licenses. Third-party
 skills in manageskill/terze-parti/ keep the license stated in their source.
-By default (setting "solo_utente": true) the program reads and exports only
-the user's own skills, not Anthropic's or marketplace plugins.
+The program reads and exports only the user's own skills: Anthropic's skills
+(under Anthropic's proprietary license) and marketplace plugin skills are never read.
 
 "Claude" and "Anthropic" are trademarks of Anthropic PBC. manage-skill is an
 independent project, not affiliated with or endorsed by Anthropic.

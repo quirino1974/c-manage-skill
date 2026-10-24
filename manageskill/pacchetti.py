@@ -84,10 +84,14 @@ def da_percorso(p: Path) -> sorgenti.Voce:
         trovate = list(tmp.glob("SKILL.md")) + list(tmp.glob("*/SKILL.md"))
         if len(trovate) != 1:
             raise Bloccato(f"{p}: lo ZIP deve contenere un solo SKILL.md (alla radice o in una cartella)")
+        if sorgenti.di_anthropic(trovate[0].parent):
+            raise Bloccato(f"{p}: skill di Anthropic con licenza proprietaria: manage-skill non la esporta né la importa")
         return sorgenti.Voce(sk.carica(trovate[0].parent), "file", "tua", trovate[0].parent)
     if (p / "skill.json").exists():
         meta = json.loads((p / "skill.json").read_text(encoding="utf-8"))
         p = p / meta["nome"]
+    if sorgenti.di_anthropic(p):
+        raise Bloccato(f"{p}: skill di Anthropic con licenza proprietaria: manage-skill non la esporta né la importa")
     return sorgenti.Voce(sk.carica(p), "file", "tua", p)
 
 

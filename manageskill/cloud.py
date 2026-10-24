@@ -109,7 +109,7 @@ def elenca_api() -> list:
 def esporta(nomi=None, sole_mie=False, forza_segreti=False, account_cloud=None) -> dict:
     """Fotografa le skill claude.ai in manageskill/archivio/cloud/<account>/<data-ora>/. Ritorna il riassunto dell'esportazione.
 
-    nomi: solo queste skill; sole_mie: solo le tue (non quelle di Anthropic). Una skill con possibili segreti
+    nomi: solo queste skill; sole_mie: solo le tue (quelle di Anthropic non vengono mai lette). Una skill con possibili segreti
     viene saltata e segnalata, a meno di forza_segreti; le altre vengono esportate comunque.
     """
     voci = [v for v in sorgenti.claude_ai() if (not sole_mie or v.origine == "tua") and (not nomi or v.skill.nome in nomi)]
@@ -211,17 +211,17 @@ def _html(indice: dict, base: Path) -> str:
     return pagina
 
 
-def verso_api(nome_account: str, nomi=None, tutte=False, prova=False, forza=False, forza_segreti=False) -> list:
+def verso_api(nome_account: str, nomi=None, prova=False, forza=False, forza_segreti=False) -> list:
     """Importa le skill di claude.ai in un account API (Claude Console).
 
     Una skill che nell'account manca viene creata; se c'è già ed è cambiata da quando manage-skill l'ha caricata
     l'ultima volta, diventa una nuova versione; se è uguale viene saltata (forza=True la ricarica comunque).
-    Senza nomi prende tutte le tue skill; con tutte=True anche quelle di Anthropic (che però nell'API esistono già).
+    Senza nomi prende tutte le tue skill. Quelle di Anthropic non ci sono mai: sorgenti non le legge.
     """
     a = acc.leggi(nome_account)
     if a["tipo"] != "api":
         raise SystemExit(f"'{nome_account}' non è un account api: scegline uno di tipo api (ms account elenco).")
-    voci = [v for v in sorgenti.claude_ai() if (tutte or nomi or v.origine == "tua") and (not nomi or v.skill.nome in nomi)]
+    voci = [v for v in sorgenti.claude_ai() if v.origine == "tua" and (not nomi or v.skill.nome in nomi)]
     if nomi:
         mancanti = sorted(set(nomi) - {v.skill.nome for v in voci})
         if mancanti:

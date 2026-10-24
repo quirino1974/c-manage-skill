@@ -146,10 +146,8 @@ def _voce(nome_o_percorso, fonte=None):
 
 
 def _selezione(a):
-    if getattr(a, "mie", False) or getattr(a, "tutte", False):
-        voci = sorgenti.tutte([a.da] if a.da else ["claude-code", "progetto", "claude-ai"])
-        if a.mie:
-            voci = [v for v in voci if v.origine == "tua"]
+    if getattr(a, "mie", False):
+        voci = [v for v in sorgenti.tutte([a.da] if a.da else ["claude-code", "progetto", "claude-ai"]) if v.origine == "tua"]
         visti, scelte = set(), []
         for v in sorted(voci, key=lambda v: {"claude-code": 0, "progetto": 1, "claude-ai": 2}.get(v.fonte, 9)):
             if v.skill.nome not in visti:
@@ -157,7 +155,7 @@ def _selezione(a):
                 scelte.append(v)
         return scelte
     if not a.skill:
-        raise SystemExit("Indica una o più skill, oppure --mie o --tutte.")
+        raise SystemExit("Indica una o più skill, oppure --mie.")
     return [_voce(n, a.da) for n in a.skill]
 
 
@@ -318,8 +316,8 @@ def cmd_cloud_elenco(a):
 
 
 def cmd_cloud_esporta(a):
-    if not (a.skill or a.mie or a.tutte):
-        raise SystemExit("Indica una o più skill, oppure --mie o --tutte.")
+    if not (a.skill or a.mie):
+        raise SystemExit("Indica una o più skill, oppure --mie.")
     risultati = cloud.esporta(nomi=a.skill or None, sole_mie=a.mie, forza_segreti=a.ignora_segreti)
     errori = 0
     for nome, r in risultati.items():
@@ -335,7 +333,7 @@ def cmd_cloud_esporta(a):
 
 
 def cmd_cloud_verso_api(a):
-    esiti = cloud.verso_api(a.account, nomi=a.skill or None, tutte=a.tutte, prova=a.prova, forza=a.forza,
+    esiti = cloud.verso_api(a.account, nomi=a.skill or None, prova=a.prova, forza=a.forza,
                             forza_segreti=a.ignora_segreti)
     errori = 0
     for e in esiti:
@@ -492,7 +490,6 @@ def parser():
         c.add_argument("skill", nargs="*", help="nomi, cartelle o ZIP")
         c.add_argument("--da", choices=FONTI, help="fonte da cui prendere la skill")
         c.add_argument("--mie", action="store_true", help="tutte le skill create da te")
-        c.add_argument("--tutte", action="store_true", help="tutte, comprese quelle di Anthropic")
         c.add_argument("--ignora-segreti", action="store_true", help="procede anche se il controllo segreti trova qualcosa")
         if nome == "importa":
             c.add_argument("--verso", required=True, help="account di destinazione (ms account elenco)")
@@ -558,14 +555,13 @@ def parser():
     c.add_argument("--mie", action="store_true", help="solo le tue"); c.add_argument("--json", action="store_true")
     c.add_argument("--api", action="store_true", help="anche i metadati delle skill negli account API"); c.set_defaults(f=cmd_cloud_elenco)
     c = cc.add_parser("esporta", help="fotografa le skill in manageskill/archivio/cloud/<account>/<data-ora>/")
-    c.add_argument("skill", nargs="*", help="nomi delle skill (vuoto con --mie o --tutte)")
-    c.add_argument("--mie", action="store_true", help="tutte le tue"); c.add_argument("--tutte", action="store_true", help="anche quelle di Anthropic")
+    c.add_argument("skill", nargs="*", help="nomi delle skill (vuoto con --mie)")
+    c.add_argument("--mie", action="store_true", help="tutte le tue")
     c.add_argument("--ignora-segreti", action="store_true"); c.set_defaults(f=cmd_cloud_esporta)
     c = cc.add_parser("storico", help="esportazioni presenti in manageskill/archivio/cloud/"); c.set_defaults(f=cmd_cloud_storico)
     c = cc.add_parser("verso-api", help="importa le skill di claude.ai in un account API (nuove o nuove versioni)")
     c.add_argument("account", help="account di tipo api (ms account elenco)")
     c.add_argument("skill", nargs="*", help="solo queste (predefinito: tutte le tue)")
-    c.add_argument("--tutte", action="store_true", help="anche quelle di Anthropic")
     c.add_argument("--prova", action="store_true", help="mostra cosa farebbe, senza caricare nulla")
     c.add_argument("--forza", action="store_true", help="ricarica anche le skill già aggiornate")
     c.add_argument("--ignora-segreti", action="store_true"); c.set_defaults(f=cmd_cloud_verso_api)
