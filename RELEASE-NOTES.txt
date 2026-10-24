@@ -1,5 +1,11 @@
 manage-skill: note di rilascio
 ==============================
+Autore: Quirino Scaramastra
+
+24 ottobre 2026
+---------------
+- Documentazione con i nomi standard: README.txt, RELEASE-NOTES.txt e RELEASE-NOTES.en.txt.
+- Nuovo file PREREQUISITES.txt con sistema, software e pacchetti necessari.
 
 1.1.0, 18 ottobre 2026
 ----------------------
@@ -12,7 +18,7 @@ Solo le tue skill, stato di attivazione, lingua
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 - Per una questione di proprietà il programma mostra ed esporta solo le skill dell'utente: le skill di Anthropic su claude.ai e quelle dei plugin dei marketplace non vengono più lette ("solo_utente": true). Dall'esportazione del cloud già fatta sono state tolte le 13 copie di skill Anthropic.
 - Nuova colonna Attiva: attiva, solo manuale, attiva (compatta), disattivata (da skillOverrides dei settings di Claude Code e dal frontmatter), oppure "su claude.ai" quando lo stato si vede solo sul sito.
-- Lingua: italiano e inglese. Menu nella finestra, MANAGE_SKILL_LINGUA=en per la riga di comando, dizionario unico manageskill/lingue/en.json. Documenti in inglese: MANUAL.en.txt, RELEASENOTES.en.txt, COPYRIGHT bilingue.
+- Lingua: italiano e inglese. Menu nella finestra, MANAGE_SKILL_LINGUA=en per la riga di comando, dizionario unico manageskill/lingue/en.json. Documenti in inglese: MANUAL.en.txt, RELEASE-NOTES.en.txt, COPYRIGHT bilingue.
 
 Licenza e copyright
 ~~~~~~~~~~~~~~~~~~~

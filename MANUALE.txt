@@ -1,5 +1,6 @@
 manage-skill: manuale d'uso
 ===========================
+Autore: Quirino Scaramastra
 
 manage-skill esporta, cataloga e descrive le skill di Claude, e le sposta tra account diversi gestendo le chiavi API. Si usa dalla riga di comando (ms) o dalla finestra Qt (manage-skill-qt).
 

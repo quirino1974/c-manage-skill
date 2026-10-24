@@ -1,5 +1,6 @@
 manage-skill
 ============
+Autore: Quirino Scaramastra
 
 Catalogo, backup, modifica e sincronizzazione delle skill di Claude.
 Catalog, back up, edit and sync your Claude skills.
@@ -19,7 +20,7 @@ Per proprietà, il programma mostra ed esporta solo le skill dell'utente, non qu
 Installazione / Installation
 ----------------------------
 
-Requisiti: Linux, Python 3.10+, per la finestra cmake e qt6-base-dev (Qt SVG).
+Requisiti: Linux, Python 3.10+, per la finestra cmake e qt6-base-dev (Qt SVG). Dettagli in PREREQUISITES.txt.
 
     git clone <indirizzo del repository> manage-skill
     cd manage-skill
@@ -33,7 +34,8 @@ Documentazione / Documentation
 ------------------------------
 
 - MANUALE.txt · MANUAL.en.txt
-- RELEASENOTES.txt · RELEASENOTES.en.txt
+- RELEASE-NOTES.txt · RELEASE-NOTES.en.txt
+- PREREQUISITES.txt
 
 Licenza / License
 -----------------

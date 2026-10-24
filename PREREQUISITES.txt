@@ -1,0 +1,34 @@
+manage-skill: prerequisiti
+==========================
+Autore: Quirino Scaramastra
+
+SISTEMA OPERATIVO
+- Linux.
+
+PER LA RIGA DI COMANDO (ms)
+- Python 3.10 o successivo, con il modulo venv (pacchetto python3-venv).
+- Connessione internet all'installazione: installa.sh scarica l'SDK
+  anthropic (versione 1.2.0 o successiva) dentro .venv.
+
+PER LA FINESTRA (manage-skill-qt, facoltativa)
+- Compilatore C++ con supporto C++17 (per esempio g++).
+- cmake 3.19 o successivo.
+- Qt 6 Widgets con il supporto SVG.
+  Su Ubuntu: sudo apt install qt6-base-dev cmake
+
+FACOLTATIVI
+- secret-tool (pacchetto libsecret-tools) per salvare le chiavi API nel
+  portachiavi di sistema. Senza, le chiavi si possono tenere in un file
+  con permessi 600 o in una variabile d'ambiente.
+- git, per aggiungere skill di terze parti da un repository.
+- La CLI ant, se si vogliono usare le sue credenziali invece di una
+  chiave salvata.
+
+ACCOUNT
+- Per leggere o importare skill con la Skills API serve una chiave API
+  della Claude Console (non una chiave Admin).
+- Per claude.ai il programma prepara gli ZIP da caricare a mano.
+
+DISCO
+- Lo spazio per l'ambiente .venv con l'SDK e per le esportazioni, che
+  dipende da quante skill si hanno.

@@ -1,5 +1,6 @@
 manage-skill: user manual
 =========================
+Author: Quirino Scaramastra
 
 manage-skill exports, catalogs and describes Claude skills, and moves them between accounts while managing API keys. You use it from the command line (ms) or from the Qt window (manage-skill-qt).
 
