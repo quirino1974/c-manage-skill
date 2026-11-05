@@ -1,14 +1,14 @@
-# manage-skill: catalogo, esportazione e sincronizzazione delle skill di Claude
+# c-manage-skill: catalogo, esportazione e sincronizzazione delle skill di Claude
 # Copyright (C) 2026 Quirino Scaramastra
 # SPDX-License-Identifier: GPL-3.0-or-later
 """Skill di terze parti: si aggiungono da un repository Git, da uno ZIP (file o https) o da una cartella,
-si tengono in manageskill/terze-parti/<nome>/ e si sincronizzano con gli account scelti.
+si tengono in c_manage_skill/terze-parti/<nome>/ e si sincronizzano con gli account scelti.
 
 Registro: dati/terze_parti.json
   {nome: {sorgente, tipo, percorso, commit, aggiunta, aggiornata, impronta,
           destinazioni: [account...], installata: {account: impronta caricata l'ultima volta}}}
 
-Le skill di terze parti possono contenere script: manage-skill non li esegue mai, ma li elenca e li passa
+Le skill di terze parti possono contenere script: c-manage-skill non li esegue mai, ma li elenca e li passa
 al controllo dei segreti prima di ogni sincronizzazione.
 """
 
@@ -75,7 +75,7 @@ def _estrai_zip(zip_path: Path, dest: Path) -> None:
 def recupera(sorgente: str) -> tuple:
     """Scarica o copia la sorgente in una cartella temporanea. Ritorna (cartella, tipo, commit)."""
     tipo = _tipo(sorgente)
-    tmp = Path(tempfile.mkdtemp(prefix="manage-skill-terze-"))
+    tmp = Path(tempfile.mkdtemp(prefix="c-manage-skill-terze-"))
     commit = ""
     if tipo == "cartella":
         shutil.copytree(Path(sorgente).expanduser(), tmp / "src", symlinks=False,

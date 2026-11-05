@@ -1,7 +1,7 @@
-// manage-skill: catalogo, esportazione e sincronizzazione delle skill di Claude
+// c-manage-skill: catalogo, esportazione e sincronizzazione delle skill di Claude
 // Copyright (C) 2026 Quirino Scaramastra
 // SPDX-License-Identifier: GPL-3.0-or-later
-// manage-skill-qt: interfaccia locale (Qt 6) per manage-skill. Nessun server: ogni operazione avvia il motore
+// c-manage-skill-qt: interfaccia locale (Qt 6) per c-manage-skill. Nessun server: ogni operazione avvia il motore
 // Python con la richiesta sullo standard input e legge la risposta JSON.
 #include "finestra.h"
 #include "motore.h"
@@ -15,11 +15,11 @@
 
 int main(int argc, char *argv[]) {
     QApplication app(argc, argv);
-    QApplication::setApplicationName("manage-skill");
+    QApplication::setApplicationName("c-manage-skill");
     QApplication::setApplicationVersion(VERSIONE_GUI);
-    QApplication::setOrganizationName("manage-skill");
-    QGuiApplication::setDesktopFileName("manage-skill");  // collega la finestra all'icona del menu (Wayland)
-    QApplication::setWindowIcon(QIcon(":/manage-skill.svg"));
+    QApplication::setOrganizationName("c-manage-skill");
+    QGuiApplication::setDesktopFileName("c-manage-skill");  // collega la finestra all'icona del menu (Wayland)
+    QApplication::setWindowIcon(QIcon(":/c-manage-skill.svg"));
     Stile::applica(app);
     Motore motore;
     Lingua::imposta(Lingua::salvata(), motore.cartellaProgetto());

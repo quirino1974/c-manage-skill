@@ -1,4 +1,4 @@
-// manage-skill: catalogo, esportazione e sincronizzazione delle skill di Claude
+// c-manage-skill: catalogo, esportazione e sincronizzazione delle skill di Claude
 // Copyright (C) 2026 Quirino Scaramastra
 // SPDX-License-Identifier: GPL-3.0-or-later
 #include "motore.h"
@@ -11,14 +11,14 @@
 #include <QProcess>
 
 Motore::Motore(QObject *genitore) : QObject(genitore) {
-    const QString daAmbiente = qEnvironmentVariable("MANAGE_SKILL_DIR");
+    const QString daAmbiente = qEnvironmentVariable("C_MANAGE_SKILL_DIR");
     m_progetto = QDir(daAmbiente.isEmpty() ? QStringLiteral(PROGETTO_DIR) : daAmbiente).absolutePath();
     m_python = m_progetto + "/.venv/bin/python";
 }
 
 bool Motore::pronto(QString *problema) const {
-    if (!QFileInfo::exists(m_progetto + "/manageskill/motore.py")) {
-        *problema = "Non trovo manage-skill in " + m_progetto + ".\nImposta MANAGE_SKILL_DIR con la cartella del programma.";
+    if (!QFileInfo::exists(m_progetto + "/c_manage_skill/motore.py")) {
+        *problema = "Non trovo c-manage-skill in " + m_progetto + ".\nImposta C_MANAGE_SKILL_DIR con la cartella del programma.";
         return false;
     }
     if (!QFileInfo(m_python).isExecutable()) {
@@ -33,7 +33,7 @@ void Motore::chiedi(const QString &azione, const QJsonObject &dati, Risposta ris
     p->setWorkingDirectory(m_progetto);
     p->setProgram(m_python);
     // Con -m Python cerca il pacchetto nella cartella di lavoro, cioè la cartella del programma
-    p->setArguments({"-m", "manageskill.motore"});
+    p->setArguments({"-m", "c_manage_skill.motore"});
 
     if (++m_inCorso == 1) emit occupato(true);
 

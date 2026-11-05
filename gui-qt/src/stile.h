@@ -1,4 +1,4 @@
-// manage-skill: catalogo, esportazione e sincronizzazione delle skill di Claude
+// c-manage-skill: catalogo, esportazione e sincronizzazione delle skill di Claude
 // Copyright (C) 2026 Quirino Scaramastra
 // SPDX-License-Identifier: GPL-3.0-or-later
 // Aspetto dell'applicazione: tavolozza e foglio di stile chiaro o scuro (segue il tema del sistema).

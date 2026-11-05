@@ -1,4 +1,4 @@
-// manage-skill: catalogo, esportazione e sincronizzazione delle skill di Claude
+// c-manage-skill: catalogo, esportazione e sincronizzazione delle skill di Claude
 // Copyright (C) 2026 Quirino Scaramastra
 // SPDX-License-Identifier: GPL-3.0-or-later
 #include "finestra.h"
@@ -98,7 +98,7 @@ QString unisci(const QJsonArray &a, const QString &sep = ", ") {
 }  // namespace
 
 Finestra::Finestra(Motore *motore, QWidget *genitore) : QMainWindow(genitore), m_motore(motore) {
-    setWindowTitle("manage-skill");
+    setWindowTitle("c-manage-skill");
     resize(1240, 820);
 
     auto *schede = new QTabWidget;
@@ -163,11 +163,11 @@ QWidget *Finestra::creaIntestazione() {
     h->setContentsMargins(18, 12, 18, 12);
     h->setSpacing(14);
     auto *logo = new QLabel;
-    logo->setPixmap(QIcon(":/manage-skill.svg").pixmap(52, 52));
+    logo->setPixmap(QIcon(":/c-manage-skill.svg").pixmap(52, 52));
     h->addWidget(logo);
     auto *testi = new QVBoxLayout;
     testi->setSpacing(0);
-    auto *titolo = new QLabel("manage-skill");
+    auto *titolo = new QLabel("c-manage-skill");
     titolo->setObjectName("titolo");
     auto *sotto = new QLabel(L("Catalogo, cloud, terze parti e account delle tue skill di Claude"));
     sotto->setObjectName("sottotitolo");
@@ -229,14 +229,14 @@ void Finestra::aggiornaContatori() {
 
 void Finestra::informazioni() {
     QDialog d(this);
-    d.setWindowTitle(L("Informazioni su manage-skill"));
+    d.setWindowTitle(L("Informazioni su c-manage-skill"));
     d.resize(560, 520);
     auto *v = new QVBoxLayout(&d);
     auto *riga = new QHBoxLayout;
     auto *logo = new QLabel;
-    logo->setPixmap(QIcon(":/manage-skill.svg").pixmap(96, 96));
+    logo->setPixmap(QIcon(":/c-manage-skill.svg").pixmap(96, 96));
     riga->addWidget(logo, 0, Qt::AlignTop);
-    auto *testa = new QLabel(QString(L("<h2 style='margin:0'>manage-skill</h2><p style='margin:2px 0'>Versione %1 · interfaccia Qt %2</p><p style='margin:6px 0'>Catalogo, esportazione e sincronizzazione delle skill di Claude.</p><p style='margin:6px 0'><b>%3</b></p>"))
+    auto *testa = new QLabel(QString(L("<h2 style='margin:0'>c-manage-skill</h2><p style='margin:2px 0'>Versione %1 · interfaccia Qt %2</p><p style='margin:6px 0'>Catalogo, esportazione e sincronizzazione delle skill di Claude.</p><p style='margin:6px 0'><b>%3</b></p>"))
                                  .arg(m_stato["versione"].toString(), QStringLiteral(VERSIONE_GUI),
                                       m_stato["copyright"].toString(L("Copyright (C) 2026 Quirino Scaramastra")).toHtmlEscaped()));
     testa->setWordWrap(true);
@@ -245,7 +245,7 @@ void Finestra::informazioni() {
     auto *testo = new QTextBrowser;
     testo->setOpenExternalLinks(true);
     testo->setHtml(
-        L("<p>Questo programma è <b>software libero</b>: puoi ridistribuirlo e/o modificarlo secondo i termini della <b>GNU General Public License</b> pubblicata dalla Free Software Foundation, nella versione 3 della licenza o (a tua scelta) in una qualsiasi versione successiva.</p><p>Questo programma è distribuito nella speranza che sia utile, ma <b>SENZA ALCUNA GARANZIA</b>, nemmeno la garanzia implicita di COMMERCIABILITÀ o di IDONEITÀ A UNO SCOPO PARTICOLARE. Per i dettagli vedi la <a href='https://www.gnu.org/licenses/gpl-3.0.html'>GNU General Public License</a>.</p><p><b>Componenti di terze parti</b><br>Anthropic Python SDK (MIT) · Qt 6 (LGPL v3) · Python (PSF).</p><p>Le skill gestite restano sotto la licenza dei rispettivi autori. \"Claude\" e \"Anthropic\" sono marchi di Anthropic PBC: manage-skill è un progetto indipendente, non affiliato ad Anthropic.</p><p style='color:gray'>SPDX: GPL-3.0-or-later · file LICENSE e COPYRIGHT nella cartella del programma.</p>"));
+        L("<p>Questo programma è <b>software libero</b>: puoi ridistribuirlo e/o modificarlo secondo i termini della <b>GNU General Public License</b> pubblicata dalla Free Software Foundation, nella versione 3 della licenza o (a tua scelta) in una qualsiasi versione successiva.</p><p>Questo programma è distribuito nella speranza che sia utile, ma <b>SENZA ALCUNA GARANZIA</b>, nemmeno la garanzia implicita di COMMERCIABILITÀ o di IDONEITÀ A UNO SCOPO PARTICOLARE. Per i dettagli vedi la <a href='https://www.gnu.org/licenses/gpl-3.0.html'>GNU General Public License</a>.</p><p><b>Componenti di terze parti</b><br>Anthropic Python SDK (MIT) · Qt 6 (LGPL v3) · Python (PSF).</p><p>Le skill gestite restano sotto la licenza dei rispettivi autori. \"Claude\" e \"Anthropic\" sono marchi di Anthropic PBC: c-manage-skill è un progetto indipendente, non affiliato ad Anthropic.</p><p style='color:gray'>SPDX: GPL-3.0-or-later · file LICENSE e COPYRIGHT nella cartella del programma.</p>"));
     v->addWidget(testo, 1);
     auto *bottoni = new QDialogButtonBox(QDialogButtonBox::Close);
     auto *licenza = bottoni->addButton(L("Licenza completa"), QDialogButtonBox::ActionRole);
@@ -272,7 +272,7 @@ void Finestra::registra(const QString &testoOriginale, bool errore) {
 
 void Finestra::errore(const QString &testo) {
     registra(testo, true);
-    QMessageBox::warning(this, "manage-skill", testo);
+    QMessageBox::warning(this, "c-manage-skill", testo);
 }
 
 QStringList Finestra::selezionate(QTableWidget *t) const {
@@ -311,7 +311,7 @@ void Finestra::avvio() {
     m_motore->chiedi("stato", {}, [this](bool ok, const QJsonObject &r, const QString &e) {
         if (!ok) return errore(e);
         m_stato = r;
-        setWindowTitle(L("manage-skill ") + r["versione"].toString());
+        setWindowTitle(L("c-manage-skill ") + r["versione"].toString());
         m_versione->setText("v" + r["versione"].toString());
         for (const auto &f : r["fonti"].toArray()) {
             m_fFonte->addItem(f.toString(), f.toString());
@@ -729,7 +729,7 @@ void Finestra::caricaCloud() {
                         .arg(c["nome"].toString().toHtmlEscaped()).arg(c["skill"].toInt()).arg(c["aggiornato"].toString());
         }
         m_infoCloud->setText(info.isEmpty() ? L("Nessuna copia sincronizzata: apri Claude Code collegato al tuo account claude.ai.")
-                                            : info.join("<br>") + L("<br>Le esportazioni vanno in <code>manageskill/archivio/cloud/&lt;account&gt;/&lt;data-ora&gt;/</code> con le cartelle, gli ZIP e l'indice. Per avere l'ultima versione apri Claude Code prima di esportare."));
+                                            : info.join("<br>") + L("<br>Le esportazioni vanno in <code>c_manage_skill/archivio/cloud/&lt;account&gt;/&lt;data-ora&gt;/</code> con le cartelle, gli ZIP e l'indice. Per avere l'ultima versione apri Claude Code prima di esportare."));
         const QStringList giaScelte = selezionate(m_tabCloud);
         const QSet<QString> prima(giaScelte.begin(), giaScelte.end());
         m_tabCloud->setSortingEnabled(false);
@@ -850,7 +850,7 @@ QWidget *Finestra::creaAccount() {
     riga->addWidget(chiave);
     riga->addWidget(rimuovi);
     v->addLayout(riga);
-    auto *nota = new QLabel(L("Le chiavi stanno nel portachiavi di sistema o in ~/.config/manage-skill/chiavi (permessi 600): non compaiono mai qui né in dati/account.json."));
+    auto *nota = new QLabel(L("Le chiavi stanno nel portachiavi di sistema o in ~/.config/c-manage-skill/chiavi (permessi 600): non compaiono mai qui né in dati/account.json."));
     nota->setWordWrap(true);
     nota->setStyleSheet("color: gray");
     v->addWidget(nota);
@@ -897,7 +897,7 @@ void Finestra::caricaAccount() {
             QString dove = a["cartella"].toString();
             if (dove.isEmpty()) dove = a["workspace_id"].toString();
             if (dove.isEmpty()) dove = a["base_url"].toString();
-            if (dove.isEmpty() && a["tipo"] == "claude-ai") dove = "manageskill/archivio/_da-caricare";
+            if (dove.isEmpty() && a["tipo"] == "claude-ai") dove = "c_manage_skill/archivio/_da-caricare";
             a["dove"] = dove;
             if (a["chiave"].toString().isEmpty()) a["chiave"] = "–";
             righe.append(a);
@@ -1011,7 +1011,7 @@ void Finestra::eliminaRemoto() {
 QWidget *Finestra::creaTerze() {
     auto *w = new QWidget;
     auto *v = new QVBoxLayout(w);
-    auto *nota = new QLabel(L("Skill prese da altri (repository Git, ZIP, cartelle). Restano in manageskill/terze-parti/: \"Aggiorna dalla sorgente\" scarica le nuove versioni, \"Sincronizza\" le porta negli account scelti. Gli script non vengono mai eseguiti da manage-skill: controllali prima di usare la skill."));
+    auto *nota = new QLabel(L("Skill prese da altri (repository Git, ZIP, cartelle). Restano in c_manage_skill/terze-parti/: \"Aggiorna dalla sorgente\" scarica le nuove versioni, \"Sincronizza\" le porta negli account scelti. Gli script non vengono mai eseguiti da c-manage-skill: controllali prima di usare la skill."));
     nota->setWordWrap(true);
     nota->setStyleSheet("color: gray");
     v->addWidget(nota);
@@ -1193,7 +1193,7 @@ QWidget *Finestra::creaEsportazioni() {
     connect(apriArchivio, &QPushButton::clicked, this, [this] {
         QDesktopServices::openUrl(QUrl::fromLocalFile(m_stato["cartelle"].toObject()["archivio"].toString()));
     });
-    auto *g1 = new QGroupBox(L("Esportazioni del cloud (manageskill/archivio/cloud/)"));
+    auto *g1 = new QGroupBox(L("Esportazioni del cloud (c_manage_skill/archivio/cloud/)"));
     auto *l1 = new QVBoxLayout(g1);
     m_tabEspCloud = tabella({L("Account"), L("Data"), L("Skill"), L("Cambiate"), L("Saltate"), L("Sincronizzate il"), L("Cartella")});
     l1->addWidget(m_tabEspCloud);
@@ -1206,7 +1206,7 @@ QWidget *Finestra::creaEsportazioni() {
     l1->addLayout(r1);
     v->addWidget(g1, 1);
 
-    auto *g2 = new QGroupBox(L("Archivio (manageskill/archivio/)"));
+    auto *g2 = new QGroupBox(L("Archivio (c_manage_skill/archivio/)"));
     auto *l2 = new QVBoxLayout(g2);
     m_tabEspArch = tabella({L("Skill"), L("Data"), L("Cartella")});
     l2->addWidget(m_tabEspArch);

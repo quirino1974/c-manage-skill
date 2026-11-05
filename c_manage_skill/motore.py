@@ -1,9 +1,9 @@
-# manage-skill: catalogo, esportazione e sincronizzazione delle skill di Claude
+# c-manage-skill: catalogo, esportazione e sincronizzazione delle skill di Claude
 # Copyright (C) 2026 Quirino Scaramastra
 # SPDX-License-Identifier: GPL-3.0-or-later
 """Motore per la finestra Qt: legge una richiesta JSON dallo standard input e scrive la risposta JSON.
 
-    echo '{"azione": "catalogo", "dati": {}}' | .venv/bin/python -m manageskill.motore
+    echo '{"azione": "catalogo", "dati": {}}' | .venv/bin/python -m c_manage_skill.motore
 
 Risposta: {"ok": true, "risultato": {...}} oppure {"ok": false, "errore": "..."}.
 I dati (comprese le chiavi API inserite nella finestra) passano solo dallo standard input: non compaiono

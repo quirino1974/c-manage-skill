@@ -1,18 +1,18 @@
-# manage-skill: catalogo, esportazione e sincronizzazione delle skill di Claude
+# c-manage-skill: catalogo, esportazione e sincronizzazione delle skill di Claude
 # Copyright (C) 2026 Quirino Scaramastra
 # SPDX-License-Identifier: GPL-3.0-or-later
-"""Skill del cloud: catalogo ed esportazione su richiesta in manageskill/archivio/cloud/.
+"""Skill del cloud: catalogo ed esportazione su richiesta in c_manage_skill/archivio/cloud/.
 
 Le skill dell'account claude.ai non si scaricano con un'API pubblica: Claude Code ne tiene una copia
 sincronizzata in ~/.claude/skills/synced/<organizzazione>_<utente>/ con un manifest.json (id, tipo, data
 di aggiornamento). Questo modulo legge quella copia e la fotografa in:
 
-  manageskill/archivio/cloud/<account>/<data-ora>/
+  c_manage_skill/archivio/cloud/<account>/<data-ora>/
     skill/<nome>/        la cartella di ogni skill
     zip/<nome>.zip       ZIP pronto da ricaricare su claude.ai o nella Skills API
     indice.json          catalogo dell'esportazione (id claude.ai, tipo, impronta, controlli)
     indice.html          lo stesso catalogo da aprire nel browser
-  manageskill/archivio/cloud/<account>/ultima collegamento all'esportazione più recente
+  c_manage_skill/archivio/cloud/<account>/ultima collegamento all'esportazione più recente
 
 Degli account API (Skills API) si possono elencare solo i metadati: l'API non permette di scaricare i file.
 """
@@ -107,7 +107,7 @@ def elenca_api() -> list:
 
 
 def esporta(nomi=None, sole_mie=False, forza_segreti=False, account_cloud=None) -> dict:
-    """Fotografa le skill claude.ai in manageskill/archivio/cloud/<account>/<data-ora>/. Ritorna il riassunto dell'esportazione.
+    """Fotografa le skill claude.ai in c_manage_skill/archivio/cloud/<account>/<data-ora>/. Ritorna il riassunto dell'esportazione.
 
     nomi: solo queste skill; sole_mie: solo le tue (quelle di Anthropic non vengono mai lette). Una skill con possibili segreti
     viene saltata e segnalata, a meno di forza_segreti; le altre vengono esportate comunque.
@@ -182,7 +182,7 @@ def _indice(cartella: Path) -> dict:
 
 
 def esportazioni() -> list:
-    """Le esportazioni presenti in manageskill/archivio/cloud/, dalla più recente."""
+    """Le esportazioni presenti in c_manage_skill/archivio/cloud/, dalla più recente."""
     risultato = []
     if not CLOUD.exists():
         return risultato
@@ -214,7 +214,7 @@ def _html(indice: dict, base: Path) -> str:
 def verso_api(nome_account: str, nomi=None, prova=False, forza=False, forza_segreti=False) -> list:
     """Importa le skill di claude.ai in un account API (Claude Console).
 
-    Una skill che nell'account manca viene creata; se c'è già ed è cambiata da quando manage-skill l'ha caricata
+    Una skill che nell'account manca viene creata; se c'è già ed è cambiata da quando c-manage-skill l'ha caricata
     l'ultima volta, diventa una nuova versione; se è uguale viene saltata (forza=True la ricarica comunque).
     Senza nomi prende tutte le tue skill. Quelle di Anthropic non ci sono mai: sorgenti non le legge.
     """

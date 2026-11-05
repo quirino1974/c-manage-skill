@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Copyright (C) 2026 Quirino Scaramastra
 # SPDX-License-Identifier: GPL-3.0-or-later
-# Installa manage-skill: ambiente Python dedicato (.venv) con l'SDK ufficiale di Anthropic,
+# Installa c-manage-skill: ambiente Python dedicato (.venv) con l'SDK ufficiale di Anthropic,
 # e il comando 'ms' in ~/.local/bin.
 set -euo pipefail
 QUI=$(cd "$(dirname "$0")" && pwd)

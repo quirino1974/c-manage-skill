@@ -7,9 +7,9 @@ gui-qt/build/
 # Dati personali: account, note, catalogo, esportazioni e skill di terze parti
 dati/
 catalogo/
-manageskill/archivio/
-manageskill/terze-parti/
+c_manage_skill/archivio/
+c_manage_skill/terze-parti/
 
-# Chiavi e segreti (non dovrebbero mai stare qui: stanno nel keyring o in ~/.config/manage-skill)
+# Chiavi e segreti (non stanno mai qui: stanno nel portachiavi o in ~/.config/c-manage-skill)
 .env
 *.key

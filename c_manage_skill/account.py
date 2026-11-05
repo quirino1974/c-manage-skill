@@ -1,4 +1,4 @@
-# manage-skill: catalogo, esportazione e sincronizzazione delle skill di Claude
+# c-manage-skill: catalogo, esportazione e sincronizzazione delle skill di Claude
 # Copyright (C) 2026 Quirino Scaramastra
 # SPDX-License-Identifier: GPL-3.0-or-later
 """Registro degli account di destinazione e di provenienza (dati/account.json, senza chiavi)."""

@@ -1,4 +1,4 @@
-# manage-skill: catalogo, esportazione e sincronizzazione delle skill di Claude
+# c-manage-skill: catalogo, esportazione e sincronizzazione delle skill di Claude
 # Copyright (C) 2026 Quirino Scaramastra
 # SPDX-License-Identifier: GPL-3.0-or-later
 """Catalogo: raggruppa per nome le skill di tutte le fonti, assegna una categoria e confronta le copie."""
@@ -18,10 +18,10 @@ CATEGORIE_PREDEFINITE = {
     "regole": [
         {"categoria": "Social e post", "parole": ["linkedin", "facebook", "substack", "bluesky", "mastodon", "threads", "post", "tweet", "newsletter", "social"]},
         {"categoria": "Posta e messaggi", "parole": ["gmail", "posta", "casella", "telegram", "slack", "smista*"]},
-        {"categoria": "Finanza", "parole": ["etf", "portafoglio", "borsa", "etoro", "azioni", "titoli azionari", "verifica-titoli"]},
+        {"categoria": "Finanza", "parole": ["etf", "portafoglio", "borsa", "azioni", "titoli azionari"]},
         {"categoria": "Carriera e formazione", "parole": ["sviluppo professionale", "carriera", "certificaz*", "competenze", "skill gap"]},
         {"categoria": "Riunioni e lavoro", "parole": ["riunione", "riunioni", "meeting", "team"]},
-        {"categoria": "Sito e SEO", "parole": ["sito", "seo", "geo", "mdsc.it", "pubblica-sito"]},
+        {"categoria": "Sito e SEO", "parole": ["sito", "seo", "geo"]},
         {"categoria": "Documenti", "parole": ["docx", "pdf", "pptx", "xlsx", "word", "excel", "powerpoint", "spreadsheet*", "slide*", "docs", "google-workspace", "document*"]},
         {"categoria": "Browser e computer", "parole": ["browser", "chrome", "computer-use", "computer use", "desktop"]},
         {"categoria": "Ricerca", "parole": ["research", "ricerca approfondita", "deep-research"]},
@@ -145,7 +145,7 @@ h1{{margin:0 0 4px}}h2{{margin:28px 0 10px}}h2 small{{color:var(--muted);font-we
 .card h3{{margin:0 0 2px;font-size:1.05rem;overflow-wrap:anywhere}}.meta{{color:var(--acc);font-size:.82rem;margin:0 0 6px}}
 .card p{{margin:0 0 8px;font-size:.92rem}}details{{font-size:.82rem;color:var(--muted)}}code{{overflow-wrap:anywhere}}
 </style></head><body><main><h1>Catalogo skill</h1>
-<p class="sub">{len(righe)} skill · {tue} tue · creato il {datetime.now().strftime('%d/%m/%Y %H:%M')} con manage-skill. Le schede con il bordo arancione hanno copie con contenuto diverso.</p>
+<p class="sub">{len(righe)} skill · {tue} tue · creato il {datetime.now().strftime('%d/%m/%Y %H:%M')} con c-manage-skill. Le schede con il bordo arancione hanno copie con contenuto diverso.</p>
 <input id="q" type="search" placeholder="Cerca per nome o descrizione" aria-label="Cerca">
 {''.join(sezioni)}</main><script>
 document.getElementById('q').addEventListener('input',function(){{var t=this.value.toLowerCase();

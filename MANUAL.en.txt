@@ -1,18 +1,44 @@
-manage-skill: user manual
-=========================
-Author: Quirino Scaramastra
+c-manage-skill: user manual
+===========================
+Autore: Quirino Scaramastra
 
-manage-skill exports, catalogs and describes Claude skills, and moves them between accounts while managing API keys. You use it from the command line (ms) or from the Qt window (manage-skill-qt).
+c-manage-skill exports, catalogs and describes Claude skills, and moves them between accounts while managing API keys. You use it from the command line (ms) or from the Qt window (c-manage-skill-qt).
 
-Copyright (C) 2026 Quirino Scaramastra. manage-skill is free software, distributed under the GNU General Public License version 3 or later (GPL-3.0-or-later), with no warranty. The license text is in the LICENSE file; copyright and third-party components are in the COPYRIGHT file. From the terminal: ms --versione; from the window: the About button.
+Copyright (C) 2026 Quirino Scaramastra. c-manage-skill is free software, distributed under the GNU General Public License version 3 or later (GPL-3.0-or-later), with no warranty. The license text is in the LICENSE file; copyright and third-party components are in the COPYRIGHT file. From the terminal: ms --versione; from the window: the About button.
 
 Language. The program is written in Italian, so the commands and options keep their Italian names: ms catalogo, ms esporta, --prova and so on. Messages, help and the window can be shown in English: see §10.1.
+
+0. The lab in brief
+-------------------
+
+c-manage-skill is a lab: an experimental way to keep Claude skills in order, not a finished product. A skill is a folder with a SKILL.md file and the supporting files Claude uses to carry out a task. With c-manage-skill you find, compare, check, export and move skills between places: the PC, your projects, claude.ai and API accounts.
+
+What it is for
+
+- having one catalog of all your skills, even when several copies live in different places;
+- knowing which copy is the most recent and which copies have different contents;
+- making tidy backup copies (archive) before you edit or delete;
+- preparing a skill to upload to another account, or to recreate it with a prompt to paste into Claude;
+- checking that a skill follows the Skills API rules and contains no secrets by mistake.
+
+How it works
+
+- Catalog. It looks for skills in six sources: Claude Code (~/.claude/skills), projects (.claude/skills), the synced copy from claude.ai, installed third-party skills and the archive. It groups copies by name and computes a SHA-256 fingerprint, so you see at once whether two copies differ.
+- Export and import. ms esporta saves a skill to c_manage_skill/archivio/ with its folder, a ZIP and skill.json. ms importa moves it to an API account, to Claude Code, or prepares the ZIP to upload by hand on claude.ai.
+- Checks. ms valida checks name, description and size against the Skills API rules. ms segreti looks for API keys, tokens, passwords and sensitive files, showing the file and line but never the value. Export and import stop if they find secrets, unless you choose otherwise.
+- Recreation prompt. ms prompt generates the text to paste into Claude to recreate a skill. Lines with possible secrets are redacted.
+- Keys. They never live in the project. They go into the system keyring, or into a file with 600 permissions in the configuration folder.
+- Window. c-manage-skill-qt has a catalog, account management, exports and the editor. It opens no port: each button starts the Python engine for a moment.
+
+Ownership rule. The program shows and exports only the skills you created and the third-party skills you added by hand. Anthropic skills under their proprietary license are recognized and refused, from any source.
+
+Known limits. There is no public API to download or upload claude.ai skills: the program uses the copy synced by Claude Code. The Skills API does not let you download a skill's files. There are no automated tests.
 
 1. Installation
 ---------------
 
-    cd manage-skill      # the repository folder
-    ./installa.sh
+cd percorso/c-manage-skill
+./installa.sh
 
 The script does three things:
 - creates the Python environment .venv;
@@ -26,33 +52,31 @@ Help: ms --help and ms <command> --help. Version: ms --versione.
 2. Folders
 ----------
 
-  Folder                           Contents
-  ------------------------------   ------------------------------------------------------------------------------------------
-  manageskill/                     the Python program; motore.py and servizi.py serve the Qt window
-  manageskill/lingue/              translations (en.json)
-  gui-qt/                          the C++ Qt window and the compila.sh script
-  dati/config.json                 optional settings (see §11)
-  dati/account.json                account registry, without keys
-  dati/categorie.json              category rules and manual assignments
-  catalogo/                        catalogo.html and catalogo.json, regenerated by every ms catalogo
-  manageskill/archivio/            all exports: single skills (ms esporta), backup copies, _da-caricare/ (ZIPs for claude.ai)
-  manageskill/archivio/cloud/      exports of the claude.ai account skills (ms cloud esporta)
-  manageskill/terze-parti/         installed third-party skills (§16)
-  ~/.config/manage-skill/chiavi/   keys saved to file (only if you choose file), outside the project
+Folder  Contents
+c_manage_skill/  the Python program; motore.py and servizi.py serve the Qt window
+c_manage_skill/lingue/  translations (en.json)
+gui-qt/  the C++ Qt window and the compila.sh script
+dati/config.json  optional settings (see §11)
+dati/account.json  account registry, without keys
+dati/categorie.json  category rules and manual assignments
+catalogo/  catalogo.html and catalogo.json, regenerated by every ms catalogo
+c_manage_skill/archivio/  all exports: single skills (ms esporta), backup copies, _da-caricare/ (ZIPs for claude.ai)
+c_manage_skill/archivio/cloud/  exports of the claude.ai account skills (ms cloud esporta)
+c_manage_skill/terze-parti/  installed third-party skills (§16)
+~/.config/c-manage-skill/chiavi/  keys saved to file (only if you choose file), outside the project
 
 3. Where skills are read from (sources)
 ---------------------------------------
 
 Only your skills. To avoid ownership problems, the program shows and exports only the skills you created (plus the third-party skills you add yourself, with their license). Anthropic's skills are never read or exported, from any source: not the ones on claude.ai, not the ones in marketplace plugins, and not a copy of them in another folder (the program recognizes Anthropic's license in the skill's LICENSE file). They are subject to Anthropic's license and cannot be redistributed.
 
-  Source        Where                                                                      Editable
-  -----------   ------------------------------------------------------------------------   --------
-  claude-code   ~/.claude/skills/<name> (including links to projects)                      yes
-  progetto      <project>/.claude/skills/<name> under the radici_progetti folders (§11)    yes
-  plugin        ~/.claude/plugins/**/skills/<name>: not read (marketplace plugins)          no
-  claude-ai     ~/.claude/skills/synced/<account>/, the copy synced by Claude Code         no
-  terze-parti   manageskill/terze-parti/<name>                                             yes
-  archivio      manageskill/archivio/<name>/<date>/<name>                                  no
+Source  Where  Editable
+claude-code  ~/.claude/skills/<name> (including links to projects)  yes
+progetto  <project>/.claude/skills/<name> under ~/progetti  yes
+plugin  ~/.claude/plugins//skills/<name> not read (marketplace plugins)  no
+claude-ai  ~/.claude/skills/synced/<account>/, the copy synced by Claude Code  no
+terze-parti  c_manage_skill/terze-parti/<name>  yes
+archivio  c_manage_skill/archivio/<name>/<date>/<name>  no
 
 The origin says who created the skill:
 - tua (yours): your skills;
@@ -67,37 +91,38 @@ When a skill is in several sources and you do not give --da, the program picks t
 
 ms catalogo
 ~~~~~~~~~~~
+
 Lists all skills with category, activation state (ACTIVE column), sources, number of files, size and copy status:
 - ok: all copies are identical;
 - DIVERSE (DIFFERENT): at least two copies differ.
 
 Each run saves catalogo/catalogo.html and catalogo/catalogo.json.
 
-  Option                           Effect
-  ------------------------------   ----------------------------------------------
-  --fonte claude-code progetto …   only these sources
-  --categoria social               only one category (part of the name is enough)
-  --mie                            only your skills
-  --json                           print the catalog as JSON
-  --apri                           open the HTML catalog in the browser
+Option  Effect
+--fonte claude-code progetto …  only these sources
+--categoria social  only one category (part of the name is enough)
+--mie  only your skills
+--json  print the catalog as JSON
+--apri  open the HTML catalog in the browser
 
 Active or disabled
 ~~~~~~~~~~~~~~~~~~
+
 The ACTIVE column (in the window: Active, and Activation in the copies panel) says whether Claude uses the skill:
 
-  Value                                 Meaning
-  -----------------------------------   -------------------------------------------------------------------------------------------------------------------------------------------------------
-  attiva (active)                       Claude Code loads it and can use it on its own
-  solo manuale (manual only)            used only when invoked with /name (skillOverrides: "user-invocable-only" or disable-model-invocation: true in the frontmatter)
-  attiva (compatta) (active, compact)   active, but Claude only sees its name (skillOverrides: "name-only")
-  disattivata (disabled)                turned off with skillOverrides: "off" in the Claude Code settings
-  su claude.ai (on claude.ai)           the skill is only on claude.ai: the on/off switch is visible only on the website (Settings > Capabilities > Skills); the synced copy does not record it
-  non caricata (not loaded)             a manage-skill copy (archive, third parties): Claude does not use it from there
+Value  Meaning
+attiva (active)  Claude Code loads it and can use it on its own
+solo manuale (manual only)  used only when invoked with /name (skillOverrides: "user-invocable-only" or disable-model-invocation: true in the frontmatter)
+attiva (compatta) (active, compact)  active, but Claude only sees its name (skillOverrides: "name-only")
+disattivata (disabled)  turned off with skillOverrides: "off" in the Claude Code settings
+su claude.ai (on claude.ai)  the skill is only on claude.ai: the on/off switch is visible only on the website (Settings > Capabilities > Skills); the synced copy does not record it
+non caricata (not loaded)  a c-manage-skill copy (archive, third parties): Claude does not use it from there
 
 For Claude Code the program reads skillOverrides in ~/.claude/settings.json and, for project skills, in <project>/.claude/settings.json and settings.local.json. Hovering over the cell shows the reason.
 
 ms descrivi <name> [--da SOURCE]
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 Shows the full details:
 - category and origin;
 - folder and fingerprint;
@@ -107,6 +132,7 @@ Shows the full details:
 
 ms confronta <name>
 ~~~~~~~~~~~~~~~~~~~
+
 Compares all copies of the skill file by file:
 - + file only in the second copy;
 - - file only in the first;
@@ -114,6 +140,7 @@ Compares all copies of the skill file by file:
 
 ms valida <skill> [--da SOURCE]
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 Checks the Skills API rules:
 - name present, lowercase letters, digits and hyphens only, at most 64 characters, without the words "anthropic" or "claude";
 - description present, at most 1024 characters;
@@ -124,10 +151,12 @@ Checks the Skills API rules:
 
 ms segreti <skill> or ms segreti --tutte
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 Looks for API keys (Anthropic, AWS, GitHub, Slack), private keys, plain-text passwords and tokens, and sensitive files (.env, .netrc, id_rsa, …). It shows the file and the line, never the value. With --tutte it checks all Claude Code and project skills.
 
 Categories
 ~~~~~~~~~~
+
 The rules are in dati/categorie.json, created on first use.
 
 How they work:
@@ -137,17 +166,18 @@ How they work:
 
 To pin a skill's category by hand:
 
-    "assegnate": { "my-skill": "Finanza" }
+"assegnate": { "skill-titoli": "Finanza" }
 
 5. Cloud skills (claude.ai account)
 -----------------------------------
 
 Only your skills appear and are exported here: Anthropic's skills on claude.ai are not read.
 
-claude.ai has no public API to download skills. Claude Code, however, keeps a synced copy on the PC, and manage-skill works on that. The sync date appears in every listing: for the latest version, open Claude Code before exporting.
+claude.ai has no public API to download skills. Claude Code, however, keeps a synced copy on the PC, and c-manage-skill works on that. The sync date appears in every listing: for the latest version, open Claude Code before exporting.
 
 ms cloud elenco [--mie] [--json] [--api]
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 Shows for each skill:
 - the type: tua (yours), Anthropic, esempio Anthropic (Anthropic example);
 - the category;
@@ -159,19 +189,20 @@ With --api it adds the metadata of the skills in the registered API accounts: na
 
 ms cloud esporta
 ~~~~~~~~~~~~~~~~
-Exports on request into the program subfolder manageskill/archivio/cloud/:
 
-    ms cloud esporta --mie                    # all yours
-    ms cloud esporta other-skill     # only some, by name
+Exports on request into the program subfolder c_manage_skill/archivio/cloud/:
+
+ms cloud esporta --mie                    # all yours
+ms cloud esporta skill-analisi     # only some, by name
 
 Each export creates:
 
-    manageskill/archivio/cloud/claude-ai_<org>_<user>/<YYYY-MM-DD_HHMMSS>/
-      skill/<name>/      the complete skill folder
-      zip/<name>.zip     ready to upload again to claude.ai or to the Skills API
-      indice.json        claude.ai id, type, fingerprint, new/same/changed, API issues, secrets
-      indice.html        the export catalog, to open in the browser
-    manageskill/archivio/cloud/claude-ai_…/ultima  ->  link to the most recent export
+c_manage_skill/archivio/cloud/claude-ai_<org>_<user>/<YYYY-MM-DD_HHMMSS>/
+  skill/<name>/      the complete skill folder
+  zip/<name>.zip     ready to upload again to claude.ai or to the Skills API
+  indice.json        claude.ai id, type, fingerprint, new/same/changed, API issues, secrets
+  indice.html        the export catalog, to open in the browser
+c_manage_skill/archivio/cloud/claude-ai_…/ultima  ->  link to the most recent export
 
 At the end the command lists the skills that are new or changed since the previous export.
 
@@ -179,9 +210,10 @@ A skill with possible secrets is skipped and reported, while the others are expo
 
 ms cloud verso-api <account> [skill…] [--prova] [--forza] [--ignora-segreti]
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 Automatically imports the claude.ai skills into a Claude Console API account:
 - a skill missing from the account is created;
-- a skill already there and changed since manage-skill last uploaded it becomes a new version;
+- a skill already there and changed since c-manage-skill last uploaded it becomes a new version;
 - an identical skill is skipped ("already up to date"). With --forza it is uploaded again anyway.
 
 Without names it takes all your skills. Skills with possible secrets or that break the Skills API rules are skipped and reported.
@@ -190,14 +222,15 @@ The command also warns when the PC has a more recent version than claude.ai: in 
 
 What has been uploaded is recorded in dati/sincronizzazioni.json, without keys. That is how the program knows what has changed.
 
-    ms cloud verso-api work-api --prova     # what it would do
-    ms cloud verso-api work-api             # do it
+ms cloud verso-api account-api --prova     # what it would do
+ms cloud verso-api account-api             # do it
 
 In the Qt window: claude.ai cloud tab, row "Import into an API account". The button acts on the selected skills, or on all yours if none is selected. "dry run" is on by default.
 
 ms cloud storico
 ~~~~~~~~~~~~~~~~
-Lists the exports in manageskill/archivio/cloud/ with:
+
+Lists the exports in c_manage_skill/archivio/cloud/ with:
 - date;
 - number of skills;
 - how many changed and how many were skipped;
@@ -208,7 +241,8 @@ Lists the exports in manageskill/archivio/cloud/ with:
 
 ms esporta <skill…> | --mie [--da SOURCE] [--ignora-segreti]
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Creates manageskill/archivio/<name>/<date-time>/ with:
+
+Creates c_manage_skill/archivio/<name>/<date-time>/ with:
 - the skill folder;
 - <name>.zip;
 - skill.json, with source, fingerprint, files, API issues and the secret check result.
@@ -217,58 +251,58 @@ It stops if it finds possible secrets.
 
 Examples:
 
-    ms esporta my-skill
-    ms esporta --mie
-    ms esporta other-skill --da claude-ai
+ms esporta skill-sito
+ms esporta --mie
+ms esporta skill-analisi --da claude-ai
 
 7. Import into an account
 -------------------------
 
 ms importa <skill…> --verso ACCOUNT [options]
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 <skill> can be one of:
 - a name;
 - a folder with SKILL.md;
 - a ZIP;
 - an archive folder (the one with skill.json).
 
-  Account type   What it does
-  ------------   ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-  api            validates the skill, then creates it with the Skills API. If a skill with the same name exists, it creates a new version
-  claude-code    copies the folder. If the skill is already there and identical it says "already identical". If it differs it stops: with --sovrascrivi it first archives the current copy, then replaces it. It never writes inside a link: in that case update the skill in the project
-  claude-ai      prepares the ZIP in the account folder or in manageskill/archivio/_da-caricare/<account>/. You upload it from claude.ai, Settings > Capabilities > Skills > Upload skill
+Account type  What it does
+api  validates the skill, then creates it with the Skills API. If a skill with the same name exists, it creates a new version
+claude-code  copies the folder. If the skill is already there and identical it says "already identical". If it differs it stops: with --sovrascrivi it first archives the current copy, then replaces it. It never writes inside a link: in that case update the skill in the project
+claude-ai  prepares the ZIP in the account folder or in c_manage_skill/archivio/_da-caricare/<account>/. You upload it from claude.ai, Settings > Capabilities > Skills > Upload skill
 
-  Option             Effect
-  ----------------   ------------------------------------------------
-  --prova            show what it would do, without changing anything
-  --sovrascrivi      claude-code only, see above
-  --da SOURCE        which copy to take the skill from
-  --mie              import all your skills
-  --ignora-segreti   proceed even with secret check warnings
+Option  Effect
+--prova  show what it would do, without changing anything
+--sovrascrivi  claude-code only, see above
+--da SOURCE  which copy to take the skill from
+--mie  import all your skills
+--ignora-segreti  proceed even with secret check warnings
 
 Examples:
 
-    ms importa my-skill --verso work-api --prova
-    ms importa my-skill --verso work-api
-    ms importa manageskill/archivio/cloud/claude-ai_…/ultima/zip/other-skill.zip --verso locale --sovrascrivi
-    ms importa --mie --verso other-pc        # claude-code account with --cartella on a shared disk
+ms importa skill-sito --verso work-api --prova
+ms importa skill-sito --verso work-api
+ms importa c_manage_skill/archivio/cloud/claude-ai_…/ultima/zip/skill-analisi.zip --verso locale --sovrascrivi
+ms importa --mie --verso other-pc        # claude-code account with --cartella on a shared disk
 
 8. Accounts and keys
 --------------------
 
 ms account elenco
 ~~~~~~~~~~~~~~~~~
+
 Lists the accounts. locale is predefined and points to ~/.claude/skills.
 
 ms account aggiungi <name> --tipo api|claude-code|claude-ai [options]
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    ms account aggiungi work-api --tipo api                  # asks for the key and saves it in the keyring
-    ms account aggiungi work-api --tipo api --chiave file    # or in ~/.config/manage-skill/chiavi (600)
-    ms account aggiungi ci --tipo api --chiave env:ANTHROPIC_API_KEY
-    ms account aggiungi profile --tipo api --chiave ant      # uses the ant CLI profile
-    ms account aggiungi project-x --tipo claude-code --cartella ~/projects/x/.claude/skills
-    ms account aggiungi web-work --tipo claude-ai --cartella ~/Downloads/work-skills
+ms account aggiungi work-api --tipo api                  # asks for the key and saves it in the keyring
+ms account aggiungi work-api --tipo api --chiave file    # or in ~/.config/c-manage-skill/chiavi (600)
+ms account aggiungi ci --tipo api --chiave env:ANTHROPIC_API_KEY
+ms account aggiungi profile --tipo api --chiave ant      # uses the ant CLI profile
+ms account aggiungi project-x --tipo claude-code --cartella ~/projects/x/.claude/skills
+ms account aggiungi web-work --tipo claude-ai --cartella ~/Downloads/work-skills
 
 Options for api accounts:
 - --workspace ID: organization workspace;
@@ -279,6 +313,7 @@ Options for api accounts:
 
 ms account console [name] [--workspace ID] [--dove keyring|file] [--sostituisci]
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 Safely sets up a Claude Console API account. The default name is console.
 
 1. On platform.claude.com create an API key under Settings > API keys, in the workspace to read. Do not use an Admin key (sk-ant-admin…): it is rejected.
@@ -292,10 +327,12 @@ Console skills and claude.ai skills are separate stores. A skill uploaded to cla
 
 ms account chiave <name> [--dove keyring|file]
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 Enters or replaces the key. It is typed without echo and never appears on screen.
 
 ms account prova <name>
 ~~~~~~~~~~~~~~~~~~~~~~~
+
 Checks the account:
 - for an api account it checks the key and counts the skills, showing only the start and end of the key;
 - for the others it checks the folder.
@@ -304,38 +341,39 @@ Errors are explained plainly, for example "invalid or revoked API key (401)" or 
 
 ms account rimuovi <name>
 ~~~~~~~~~~~~~~~~~~~~~~~~~
+
 Removes the account and deletes its key from the keyring or the file.
 
 Key rules
 ~~~~~~~~~
+
 - Keys never go into dati/account.json, archives or exports.
 - The keyring is the recommended choice. Use the file only if secret-tool is not available; in that case the program refuses the file if other users can read it.
 
 9. Skills in API accounts
 -------------------------
 
-  Command                                     Effect
-  -----------------------------------------   -----------------------------------------------------------------------------
-  ms remoto elenco <account> [--tutte]        custom skills (with --tutte also Anthropic's): name, id, version, date
-  ms remoto versioni <account> <name>         versions of a skill
-  ms remoto elimina <account> <name> [--si]   deletes the skill and all its versions. Asks you to type SI. Cannot be undone
+Command  Effect
+ms remoto elenco <account> [--tutte]  custom skills (with --tutte also Anthropic's): name, id, version, date
+ms remoto versioni <account> <name>  versions of a skill
+ms remoto elimina <account> <name> [--si]  deletes the skill and all its versions. Asks you to type SI. Cannot be undone
 
 10. Management interface (Qt window)
 ------------------------------------
 
-A native window written in C++ with Qt 6 (folder gui-qt/). There is no server and no open port: each button briefly starts the Python engine (python -m manageskill.motore), passes it the request on standard input and reads the JSON reply. When you close the window nothing keeps running.
+A native window written in C++ with Qt 6 (folder gui-qt/). There is no server and no open port: each button briefly starts the Python engine (python -m c_manage_skill.motore), passes it the request on standard input and reads the JSON reply. When you close the window nothing keeps running.
 
 Build, once (and after every change to the C++ code):
 
-    sudo apt install qt6-base-dev cmake
-    gui-qt/compila.sh            # creates gui-qt/build/manage-skill-qt and the manage-skill-qt command
-    manage-skill-qt
+sudo apt install qt6-base-dev cmake
+gui-qt/compila.sh            # creates gui-qt/build/c-manage-skill-qt and the c-manage-skill-qt command
+c-manage-skill-qt
 
-compila.sh also installs the icon and the manage-skill entry in the applications menu: search for "manage-skill" in the GNOME overview.
+compila.sh also installs the icon and the c-manage-skill entry in the applications menu: search for "c-manage-skill" in the GNOME overview.
 
-The look follows the system light or dark theme. To choose it by hand: MANAGE_SKILL_TEMA=scuro manage-skill-qt (dark) or chiaro (light). The top bar shows the counters (total skills, yours, to align, third-party), the language menu and the About button, with version, copyright and license.
+The look follows the system light or dark theme. To choose it by hand: C_MANAGE_SKILL_TEMA=scuro c-manage-skill-qt (dark) or chiaro (light). The top bar shows the counters (total skills, yours, to align, third-party), the language menu and the About button, with version, copyright and license.
 
-The window looks for the Python program in the folder where it was built. If you move manage-skill, rebuild or set MANAGE_SKILL_DIR.
+The window looks for the Python program in the folder where it was built. If you move c-manage-skill, rebuild or set C_MANAGE_SKILL_DIR.
 
 It has five tabs (Catalog, claude.ai cloud, Third parties, Accounts and keys, Exports) and an activity log at the bottom.
 
@@ -359,7 +397,7 @@ It has five tabs (Catalog, claude.ai cloud, Third parties, Accounts and keys, Ex
   - account list, with New account, Test, Change key and Remove (which asks for confirmation);
   - the key is typed in a password field;
   - listing and deleting the skills of an API account: to delete, type the skill name.
-- Exports: shows where exports are kept (manageskill/archivio/ and manageskill/archivio/cloud/) and the "Open archive" button. It lists the exports with buttons to open the index or the folder.
+- Exports: shows where exports are kept (c_manage_skill/archivio/ and c_manage_skill/archivio/cloud/) and the "Open archive" button. It lists the exports with buttons to open the index or the folder.
 
 Key safety: the key travels from the window to the engine only through standard input, so it is not visible among processes with ps. The engine saves it in the keyring or the protected file and never sends it back.
 
@@ -368,21 +406,21 @@ Key safety: the key travels from the window to the engine only through standard 
 
 The interface is in Italian or English:
 - window: language menu in the top bar (🇮🇹 Italiano / 🇬🇧 English). The choice is remembered and the window is rebuilt at once in the new language;
-- command line: MANAGE_SKILL_LINGUA=en ms … or "lingua": "en" in dati/config.json.
+- command line: C_MANAGE_SKILL_LINGUA=en ms … or "lingua": "en" in dati/config.json.
 
-Translations are in manageskill/lingue/en.json, a single dictionary for window, engine and command line, generated by strumenti/crea_dizionario_en.py. To fix or add a translation, edit the script and run it again. Command and option names (ms catalogo, --prova…) stay the same in every language. The English documents are MANUAL.en.txt, RELEASENOTES.en.txt and the English part of COPYRIGHT.
+Translations are in c_manage_skill/lingue/en.json, a single dictionary for window, engine and command line, generated by strumenti/crea_dizionario_en.py. To fix or add a translation, edit the script and run it again. Command and option names (ms catalogo, --prova…) stay the same in every language. The English documents are MANUAL.en.md, RELEASENOTES.en.md and the English part of COPYRIGHT.
 
 11. Settings (dati/config.json, optional)
 -----------------------------------------
 
-    {
-      "radici_progetti": ["/home/user/projects", "/home/user/Documents/GitHub"],
-      "escludi": ["node_modules", ".git", ".venv", "venv", "__pycache__", "data", "archivio"],
-      "limite_mb": 30,
-      "lingua": "en"
-    }
+{
+  "radici_progetti": ["~/progetti", "~/repository"],
+  "escludi": ["node_modules", ".git", ".venv", "venv", "__pycache__", "data", "archivio"],
+  "limite_mb": 30,
+  "lingua": "en"
+}
 
-- radici_progetti: where to look for .claude/skills folders; without dati/config.json the default is ~/claudeworkspace;
+- radici_progetti: where to look for .claude/skills folders;
 - escludi: folders not to explore;
 - limite_mb: maximum size for the Skills API;
 - lingua: it or en for the command line.
@@ -392,7 +430,7 @@ Translations are in manageskill/lingue/en.json, a single dictionary for window, 
 
 Backup of the cloud skills. Open Claude Code, then:
 
-    ms cloud esporta --mie && ms cloud storico
+ms cloud esporta --mie && ms cloud storico
 
 Align claude.ai and the PC.
 1. ms cloud elenco --mie: look at the skills marked diversa (different).
@@ -408,16 +446,15 @@ Bring your skills into an API organization.
 13. Common problems
 -------------------
 
-  Message                                     What to do
-  -----------------------------------------   --------------------------------------------------------------------------------------------------------------
-  No claude.ai skills found                   open Claude Code signed in to the claude.ai account, so it syncs the copy
-  Possible secrets …                          remove the key from the skill (an environment variable is better); if it is a false alarm use --ignora-segreti
-  invalid or revoked API key (401)            ms account chiave <name>
-  the key is not tied to a workspace…         give the Workspace ID (--workspace wrkspc_…), or create a key inside the workspace
-  … already exists … with different content   ms confronta <name>, then --sovrascrivi if you want to replace it
-  … is a link to …                            the skill lives in a project: edit it there
-  Non trovo manage-skill in … (window)        rebuild with gui-qt/compila.sh or set MANAGE_SKILL_DIR
-  Manca l'ambiente Python … (window)          run ./installa.sh in the program folder
+Message  What to do
+No claude.ai skills found  open Claude Code signed in to the claude.ai account, so it syncs the copy
+Possible secrets …  remove the key from the skill (an environment variable is better); if it is a false alarm use --ignora-segreti
+invalid or revoked API key (401)  ms account chiave <name>
+the key is not tied to a workspace…  give the Workspace ID (--workspace wrkspc_…), or create a key inside the workspace
+… already exists … with different content  ms confronta <name>, then --sovrascrivi if you want to replace it
+… is a link to …  the skill lives in a project: edit it there
+Non trovo c-manage-skill in … (window)  rebuild with gui-qt/compila.sh or set C_MANAGE_SKILL_DIR
+Manca l'ambiente Python … (window)  run ./installa.sh in the program folder
 
 14. Skill notes
 ---------------
@@ -438,7 +475,7 @@ From the window you edit a skill's files: SKILL.md, references, scripts.
 
 Safety rules:
 - only claude-code, project and third-party copies can be edited. claude.ai, plugin and archive copies open read-only. To change a claude.ai skill, edit the local copy and upload it again;
-- before every save the whole skill is copied to manageskill/archivio/<name>/<date-time>/;
+- before every save the whole skill is copied to c_manage_skill/archivio/<name>/<date-time>/;
 - if another program changed the file after it was opened, the save is refused: reopen the file;
 - after saving, the skill is checked again (Skills API rules, name matching the folder, possible secrets) and warnings appear at once;
 - the editor accepts only UTF-8 text files up to 1 MB and never writes outside the skill folder;
@@ -447,7 +484,7 @@ Safety rules:
 16. Third-party skills
 ----------------------
 
-Skills written by others, taken from a Git repository, a ZIP (file or https address) or a folder. manage-skill keeps them in manageskill/terze-parti/<name>/, remembers where they come from (dati/terze_parti.json), updates them from the source and syncs them to the accounts you choose. Each skill keeps the license of its source: check it before redistributing.
+Skills written by others, taken from a Git repository, a ZIP (file or https address) or a folder. c-manage-skill keeps them in c_manage_skill/terze-parti/<name>/, remembers where they come from (dati/terze_parti.json), updates them from the source and syncs them to the accounts you choose. Each skill keeps the license of its source: check it before redistributing.
 
 From the window, Third parties tab:
 1. Add…: paste the source (for example https://github.com/anthropics/skills) or choose a folder or a ZIP, and press Find skills. The list shows the number of files, scripts and possible secrets. Tick the skills to add and the accounts to sync them to, then press Add selected.
@@ -463,16 +500,16 @@ From the window, Third parties tab:
 
 From the terminal:
 
-    ms terze anteprima https://github.com/anthropics/skills            # what it contains
-    ms terze aggiungi https://github.com/anthropics/skills --percorso skills/canvas-design --verso locale
-    ms terze elenco
-    ms terze destinazioni canvas-design locale work-api
-    ms terze aggiorna                       # all; --forza to replace copies modified here too
-    ms terze sincronizza --prova            # then without --prova; --verso <account> for one only
-    ms terze rimuovi canvas-design
+ms terze anteprima https://github.com/anthropics/skills            # what it contains
+ms terze aggiungi https://github.com/anthropics/skills --percorso skills/canvas-design --verso locale
+ms terze elenco
+ms terze destinazioni canvas-design locale account-api
+ms terze aggiorna                       # all; --forza to replace copies modified here too
+ms terze sincronizza --prova            # then without --prova; --verso <account> for one only
+ms terze rimuovi canvas-design
 
 Safety:
-- manage-skill never runs the scripts of third-party skills. It lists them, in the Scripts column and in the preview, so you can check them before using the skill with Claude;
+- c-manage-skill never runs the scripts of third-party skills. It lists them, in the Scripts column and in the preview, so you can check them before using the skill with Claude;
 - the secret check runs before every sync;
 - ZIPs are extracted only if they contain no dangerous paths, and downloads are limited to 50 MB;
 - git clone never asks for credentials: a private repository must be made accessible beforehand, for example with an SSH key.
@@ -499,7 +536,7 @@ Safety: lines where the secret check finds keys, tokens or passwords are redacte
 - Window: in the Catalog select the skill (and, if you like, a specific copy in the copies panel), then press Prompt…; or Prompt to recreate the skill in the skill details. The preview opens, editable, with the mode choice and the Copy to clipboard and Save as file… buttons.
 - Terminal:
 
-    ms prompt my-skill              # print the prompt
-    ms prompt my-skill --copia      # copy it to the clipboard (wl-copy, xclip or xsel)
-    ms prompt my-skill --essenziale --file ~/prompt.md
-    ms prompt other-skill --da claude-ai   # from the claude.ai copy
+ms prompt skill-sito              # print the prompt
+ms prompt skill-sito --copia      # copy it to the clipboard (wl-copy, xclip or xsel)
+ms prompt skill-sito --essenziale --file ~/prompt.md
+ms prompt skill-analisi --da claude-ai   # from the claude.ai copy

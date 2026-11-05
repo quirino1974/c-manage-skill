@@ -1,7 +1,7 @@
-# manage-skill: catalogo, esportazione e sincronizzazione delle skill di Claude
+# c-manage-skill: catalogo, esportazione e sincronizzazione delle skill di Claude
 # Copyright (C) 2026 Quirino Scaramastra
 # SPDX-License-Identifier: GPL-3.0-or-later
-"""Percorsi e impostazioni di manage-skill."""
+"""Percorsi e impostazioni di c-manage-skill."""
 
 import json
 import os
@@ -9,22 +9,22 @@ from pathlib import Path
 
 PROGETTO = Path(__file__).resolve().parent.parent
 DATI = PROGETTO / "dati"
-# Esportazioni dentro la cartella del programma: manageskill/archivio (skill singole, ZIP da caricare, cloud/)
-ARCHIVIO = PROGETTO / "manageskill" / "archivio"
-# Skill di terze parti installate da manage-skill (vedi terze.py)
-TERZE = PROGETTO / "manageskill" / "terze-parti"
+# Esportazioni dentro la cartella del programma: c_manage_skill/archivio (skill singole, ZIP da caricare, cloud/)
+ARCHIVIO = PROGETTO / "c_manage_skill" / "archivio"
+# Skill di terze parti installate da c-manage-skill (vedi terze.py)
+TERZE = PROGETTO / "c_manage_skill" / "terze-parti"
 CATALOGO = PROGETTO / "catalogo"
 CONFIG_FILE = DATI / "config.json"
 ACCOUNT_FILE = DATI / "account.json"
 CATEGORIE_FILE = DATI / "categorie.json"
 # Le chiavi non stanno mai nella cartella del progetto
-CHIAVI_DIR = Path(os.environ.get("XDG_CONFIG_HOME", Path.home() / ".config")) / "manage-skill" / "chiavi"
+CHIAVI_DIR = Path(os.environ.get("XDG_CONFIG_HOME", Path.home() / ".config")) / "c-manage-skill" / "chiavi"
 
 HOME_CLAUDE = Path.home() / ".claude"
 
 PREDEFINITA = {
     # Cartelle in cui cercare skill di progetto (.claude/skills/<nome>/SKILL.md)
-    "radici_progetti": [str(Path.home() / "claudeworkspace")],
+    "radici_progetti": [str(Path.home() / "progetti")],
     # Cartelle da non esplorare durante la ricerca
     "escludi": ["node_modules", ".git", ".venv", "venv", "__pycache__", "data", "archivio"],
     # Limiti della Skills API di Anthropic

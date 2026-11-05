@@ -1,11 +1,11 @@
-# manage-skill: catalogo, esportazione e sincronizzazione delle skill di Claude
+# c-manage-skill: catalogo, esportazione e sincronizzazione delle skill di Claude
 # Copyright (C) 2026 Quirino Scaramastra
 # SPDX-License-Identifier: GPL-3.0-or-later
 """Gestione delle chiavi API degli account.
 
 Le chiavi non stanno mai in account.json né negli archivi. Per ogni account si indica dove si trova la chiave:
   keyring     portachiavi di sistema (secret-tool / GNOME Keyring), consigliato
-  file        file in ~/.config/manage-skill/chiavi/<account> con permessi 600
+  file        file in ~/.config/c-manage-skill/chiavi/<account> con permessi 600
   env:VAR     variabile d'ambiente VAR (utile per CI o per chiavi già esportate)
   ant         credenziali del profilo attivo della CLI `ant` (ant auth login), nessuna chiave salvata qui
 La chiave si inserisce solo da tastiera (getpass, senza eco) e non viene mai stampata.
@@ -18,7 +18,7 @@ import subprocess
 
 from .config import CHIAVI_DIR
 
-ATTRIBUTI = ("application", "manage-skill", "account")
+ATTRIBUTI = ("application", "c-manage-skill", "account")
 
 
 def maschera(chiave: str) -> str:
@@ -36,7 +36,7 @@ def salva(account: str, archivio: str, chiave: str) -> str:
     if archivio == "keyring":
         if not keyring_disponibile():
             raise RuntimeError("secret-tool non disponibile: usa --chiave file")
-        subprocess.run(["secret-tool", "store", f"--label=manage-skill: {account}", *ATTRIBUTI, account],
+        subprocess.run(["secret-tool", "store", f"--label=c-manage-skill: {account}", *ATTRIBUTI, account],
                        input=chiave.encode(), check=True)
         return "keyring"
     if archivio == "file":

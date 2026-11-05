@@ -1,9 +1,9 @@
-# manage-skill: catalogo, esportazione e sincronizzazione delle skill di Claude
+# c-manage-skill: catalogo, esportazione e sincronizzazione delle skill di Claude
 # Copyright (C) 2026 Quirino Scaramastra
 # SPDX-License-Identifier: GPL-3.0-or-later
 """Esportazione e importazione delle skill.
 
-Un'esportazione crea in manageskill/archivio/<nome>/<data-ora>/:
+Un'esportazione crea in c_manage_skill/archivio/<nome>/<data-ora>/:
   <nome>/               la cartella della skill, così com'è
   <nome>.zip            ZIP con la cartella <nome>/SKILL.md, pronto per claude.ai o per la Skills API
   skill.json            metadati: fonte, impronta, file, data, controllo dei segreti
@@ -75,7 +75,7 @@ def da_percorso(p: Path) -> sorgenti.Voce:
     """Una skill da cartella, da ZIP o da una cartella di archivio (quella con skill.json)."""
     p = Path(p).expanduser()
     if p.is_file() and p.suffix == ".zip":
-        tmp = Path(tempfile.mkdtemp(prefix="manage-skill-"))
+        tmp = Path(tempfile.mkdtemp(prefix="c-manage-skill-"))
         with zipfile.ZipFile(p) as z:
             for n in z.namelist():
                 if n.startswith("/") or ".." in Path(n).parts:
@@ -85,13 +85,13 @@ def da_percorso(p: Path) -> sorgenti.Voce:
         if len(trovate) != 1:
             raise Bloccato(f"{p}: lo ZIP deve contenere un solo SKILL.md (alla radice o in una cartella)")
         if sorgenti.di_anthropic(trovate[0].parent):
-            raise Bloccato(f"{p}: skill di Anthropic con licenza proprietaria: manage-skill non la esporta né la importa")
+            raise Bloccato(f"{p}: skill di Anthropic con licenza proprietaria: c-manage-skill non la esporta né la importa")
         return sorgenti.Voce(sk.carica(trovate[0].parent), "file", "tua", trovate[0].parent)
     if (p / "skill.json").exists():
         meta = json.loads((p / "skill.json").read_text(encoding="utf-8"))
         p = p / meta["nome"]
     if sorgenti.di_anthropic(p):
-        raise Bloccato(f"{p}: skill di Anthropic con licenza proprietaria: manage-skill non la esporta né la importa")
+        raise Bloccato(f"{p}: skill di Anthropic con licenza proprietaria: c-manage-skill non la esporta né la importa")
     return sorgenti.Voce(sk.carica(p), "file", "tua", p)
 
 

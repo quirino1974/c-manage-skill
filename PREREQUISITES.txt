@@ -1,4 +1,4 @@
-manage-skill: prerequisiti
+c-manage-skill: prerequisiti
 ==========================
 Autore: Quirino Scaramastra
 
@@ -10,7 +10,7 @@ PER LA RIGA DI COMANDO (ms)
 - Connessione internet all'installazione: installa.sh scarica l'SDK
   anthropic (versione 1.2.0 o successiva) dentro .venv.
 
-PER LA FINESTRA (manage-skill-qt, facoltativa)
+PER LA FINESTRA (c-manage-skill-qt, facoltativa)
 - Compilatore C++ con supporto C++17 (per esempio g++).
 - cmake 3.19 o successivo.
 - Qt 6 Widgets con il supporto SVG.

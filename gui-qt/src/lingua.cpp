@@ -1,4 +1,4 @@
-// manage-skill: catalogo, esportazione e sincronizzazione delle skill di Claude
+// c-manage-skill: catalogo, esportazione e sincronizzazione delle skill di Claude
 // Copyright (C) 2026 Quirino Scaramastra
 // SPDX-License-Identifier: GPL-3.0-or-later
 #include "lingua.h"
@@ -47,7 +47,7 @@ void imposta(const QString &codice, const QString &cartellaProgetto) {
     g_esatti.clear();
     g_modelli.clear();
     if (g_codice == "it") return;
-    QFile f(cartellaProgetto + "/manageskill/lingue/" + g_codice + ".json");
+    QFile f(cartellaProgetto + "/c_manage_skill/lingue/" + g_codice + ".json");
     if (!f.open(QIODevice::ReadOnly)) return;
     const QJsonObject d = QJsonDocument::fromJson(f.readAll()).object();
     const QJsonObject esatti = d["esatti"].toObject();
@@ -61,9 +61,9 @@ void imposta(const QString &codice, const QString &cartellaProgetto) {
 
 QString codice() { return g_codice; }
 
-QString salvata() { return QSettings("manage-skill", "manage-skill").value("lingua", "it").toString(); }
+QString salvata() { return QSettings("c-manage-skill", "c-manage-skill").value("lingua", "it").toString(); }
 
-void salva(const QString &codice) { QSettings("manage-skill", "manage-skill").setValue("lingua", codice); }
+void salva(const QString &codice) { QSettings("c-manage-skill", "c-manage-skill").setValue("lingua", codice); }
 
 QString traduci(const QString &testo) {
     if (g_codice == "it" || testo.isEmpty()) return testo;

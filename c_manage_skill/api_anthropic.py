@@ -1,4 +1,4 @@
-# manage-skill: catalogo, esportazione e sincronizzazione delle skill di Claude
+# c-manage-skill: catalogo, esportazione e sincronizzazione delle skill di Claude
 # Copyright (C) 2026 Quirino Scaramastra
 # SPDX-License-Identifier: GPL-3.0-or-later
 """Accesso alla Skills API di Anthropic con l'SDK ufficiale (anthropic >= 1.2.0, nessun header beta).

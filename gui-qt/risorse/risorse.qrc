@@ -1,6 +1,6 @@
 <!DOCTYPE RCC>
 <RCC version="1.0">
   <qresource prefix="/">
-    <file>manage-skill.svg</file>
+    <file>c-manage-skill.svg</file>
   </qresource>
 </RCC>

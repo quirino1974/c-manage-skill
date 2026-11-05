@@ -1,4 +1,4 @@
-// manage-skill: catalogo, esportazione e sincronizzazione delle skill di Claude
+// c-manage-skill: catalogo, esportazione e sincronizzazione delle skill di Claude
 // Copyright (C) 2026 Quirino Scaramastra
 // SPDX-License-Identifier: GPL-3.0-or-later
 // Finestra principale: schede Catalogo, Cloud claude.ai, Account e chiavi, Esportazioni, più il registro.

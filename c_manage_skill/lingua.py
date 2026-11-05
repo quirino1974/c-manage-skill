@@ -1,10 +1,10 @@
-# manage-skill: catalogo, esportazione e sincronizzazione delle skill di Claude
+# c-manage-skill: catalogo, esportazione e sincronizzazione delle skill di Claude
 # Copyright (C) 2026 Quirino Scaramastra
 # SPDX-License-Identifier: GPL-3.0-or-later
 """Lingua dei messaggi. Il programma è scritto in italiano; per l'inglese i testi vengono cercati nel dizionario
-manageskill/lingue/en.json (lo stesso della finestra Qt), generato da strumenti/crea_dizionario_en.py.
+c_manage_skill/lingue/en.json (lo stesso della finestra Qt), generato da strumenti/crea_dizionario_en.py.
 
-La lingua si sceglie con MANAGE_SKILL_LINGUA=en|it, con "lingua" in dati/config.json, oppure, per la finestra,
+La lingua si sceglie con C_MANAGE_SKILL_LINGUA=en|it, con "lingua" in dati/config.json, oppure, per la finestra,
 con il menu della lingua (che la passa al motore a ogni richiesta).
 """
 
@@ -25,7 +25,7 @@ def attuale() -> str:
     global _lingua
     if _lingua is None:
         from .config import impostazioni
-        _lingua = (os.environ.get("MANAGE_SKILL_LINGUA") or impostazioni().get("lingua") or "it").lower()[:2]
+        _lingua = (os.environ.get("C_MANAGE_SKILL_LINGUA") or impostazioni().get("lingua") or "it").lower()[:2]
     return _lingua
 
 

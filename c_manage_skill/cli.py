@@ -1,7 +1,7 @@
-# manage-skill: catalogo, esportazione e sincronizzazione delle skill di Claude
+# c-manage-skill: catalogo, esportazione e sincronizzazione delle skill di Claude
 # Copyright (C) 2026 Quirino Scaramastra
 # SPDX-License-Identifier: GPL-3.0-or-later
-"""Riga di comando di manage-skill (comando: ms). Esegui 'ms --help' o 'ms <comando> --help'."""
+"""Riga di comando di c-manage-skill (comando: ms). Esegui 'ms --help' o 'ms <comando> --help'."""
 
 import argparse
 import json
@@ -22,7 +22,7 @@ def print(*valori, **opzioni):  # noqa: A001 - i messaggi passano dal dizionario
 
 
 def _traduci_aiuto(p: argparse.ArgumentParser) -> None:
-    """Traduce descrizioni e aiuti di tutti i comandi (MANAGE_SKILL_LINGUA=en)."""
+    """Traduce descrizioni e aiuti di tutti i comandi (C_MANAGE_SKILL_LINGUA=en)."""
     p.description = lingua.t(p.description)
     for azione in p._actions:
         if azione.help and azione.help != argparse.SUPPRESS:
@@ -255,7 +255,7 @@ def cmd_account_prova(a):
             return 1
     else:
         c = account.cartella(d) if d.get("cartella") else None
-        print(f"Cartella {c}: " + ("esiste" if c and c.exists() else "non esiste ancora (verrà creata al primo import)") if c else "nessuna cartella: gli ZIP vanno in manageskill/archivio/_da-caricare")
+        print(f"Cartella {c}: " + ("esiste" if c and c.exists() else "non esiste ancora (verrà creata al primo import)") if c else "nessuna cartella: gli ZIP vanno in c_manage_skill/archivio/_da-caricare")
 
 
 def cmd_account_rimuovi(a):
@@ -447,11 +447,11 @@ class _Versione(argparse.Action):
 
     def __call__(self, parser, namespace, values, option_string=None):
         if lingua.attuale() == "en":
-            testo = (f"manage-skill {__version__}\n{COPYRIGHT}\n"
+            testo = (f"c-manage-skill {__version__}\n{COPYRIGHT}\n"
                      "License GNU GPL v3 or later <https://www.gnu.org/licenses/gpl-3.0.html>.\n"
                      "This is free software, with no warranty. Details in the LICENSE and COPYRIGHT files.")
         else:
-            testo = (f"manage-skill {__version__}\n{COPYRIGHT}\n"
+            testo = (f"c-manage-skill {__version__}\n{COPYRIGHT}\n"
                      "Licenza GNU GPL v3 o successiva <https://www.gnu.org/licenses/gpl-3.0.html>.\n"
                      "Questo è software libero, senza alcuna garanzia. Dettagli nei file LICENSE e COPYRIGHT.")
         _print(testo)
@@ -484,7 +484,7 @@ def parser():
     c.add_argument("skill", nargs="?"); c.add_argument("--da", choices=FONTI)
     c.add_argument("--tutte", action="store_true", help="tutte le skill di Claude Code e dei progetti"); c.set_defaults(f=cmd_segreti)
 
-    for nome, aiuto, funzione in (("esporta", "esporta in manageskill/archivio/ (cartella + ZIP + skill.json)", cmd_esporta),
+    for nome, aiuto, funzione in (("esporta", "esporta in c_manage_skill/archivio/ (cartella + ZIP + skill.json)", cmd_esporta),
                                   ("importa", "porta skill in un account (api, claude-code, claude-ai)", cmd_importa)):
         c = sub.add_parser(nome, help=aiuto)
         c.add_argument("skill", nargs="*", help="nomi, cartelle o ZIP")
@@ -550,15 +550,15 @@ def parser():
     c.add_argument("--ignora-segreti", action="store_true"); c.set_defaults(f=cmd_terze_sincronizza)
     c = tc.add_parser("rimuovi"); c.add_argument("nome"); c.set_defaults(f=cmd_terze_rimuovi)
 
-    cc = sub.add_parser("cloud", help="skill dell'account claude.ai: catalogo ed esportazione in manageskill/archivio/cloud/").add_subparsers(dest="azione", required=True)
+    cc = sub.add_parser("cloud", help="skill dell'account claude.ai: catalogo ed esportazione in c_manage_skill/archivio/cloud/").add_subparsers(dest="azione", required=True)
     c = cc.add_parser("elenco", help="catalogo delle skill claude.ai")
     c.add_argument("--mie", action="store_true", help="solo le tue"); c.add_argument("--json", action="store_true")
     c.add_argument("--api", action="store_true", help="anche i metadati delle skill negli account API"); c.set_defaults(f=cmd_cloud_elenco)
-    c = cc.add_parser("esporta", help="fotografa le skill in manageskill/archivio/cloud/<account>/<data-ora>/")
+    c = cc.add_parser("esporta", help="fotografa le skill in c_manage_skill/archivio/cloud/<account>/<data-ora>/")
     c.add_argument("skill", nargs="*", help="nomi delle skill (vuoto con --mie)")
     c.add_argument("--mie", action="store_true", help="tutte le tue")
     c.add_argument("--ignora-segreti", action="store_true"); c.set_defaults(f=cmd_cloud_esporta)
-    c = cc.add_parser("storico", help="esportazioni presenti in manageskill/archivio/cloud/"); c.set_defaults(f=cmd_cloud_storico)
+    c = cc.add_parser("storico", help="esportazioni presenti in c_manage_skill/archivio/cloud/"); c.set_defaults(f=cmd_cloud_storico)
     c = cc.add_parser("verso-api", help="importa le skill di claude.ai in un account API (nuove o nuove versioni)")
     c.add_argument("account", help="account di tipo api (ms account elenco)")
     c.add_argument("skill", nargs="*", help="solo queste (predefinito: tutte le tue)")

@@ -1,4 +1,4 @@
-manage-skill - catalogo, esportazione e sincronizzazione delle skill di Claude
+c-manage-skill - catalogo, esportazione e sincronizzazione delle skill di Claude
 Copyright (C) 2026 Quirino Scaramastra
 
 Questo programma è software libero: puoi ridistribuirlo e/o modificarlo secondo i termini
@@ -17,7 +17,7 @@ Identificativo SPDX: GPL-3.0-or-later
 
 Componenti di terze parti
 -------------------------
-manage-skill usa questi componenti, ognuno con la propria licenza, compatibile con la GPL v3:
+c-manage-skill usa questi componenti, ognuno con la propria licenza, compatibile con la GPL v3:
 
   - Anthropic Python SDK (anthropic)   MIT License             https://github.com/anthropics/anthropic-sdk-python
   - Qt 6 (Qt Widgets, Qt SVG)          GNU LGPL v3             https://www.qt.io/licensing
@@ -27,12 +27,12 @@ Il programma non include queste librerie: le usa quando sono installate nel sist
 nell'ambiente .venv.
 
 Le skill gestite dal programma (le tue e quelle di terze parti) NON fanno parte di
-manage-skill e restano sotto la licenza dei rispettivi autori. Le skill di terze parti in
-manageskill/terze-parti/ conservano la licenza indicata nella loro sorgente. Il
+c-manage-skill e restano sotto la licenza dei rispettivi autori. Le skill di terze parti in
+c_manage_skill/terze-parti/ conservano la licenza indicata nella loro sorgente. Il
 programma legge ed esporta solo le skill dell'utente: le skill di Anthropic (con licenza
 proprietaria di Anthropic) e quelle dei plugin dei marketplace non vengono mai lette.
 
-"Claude" e "Anthropic" sono marchi di Anthropic PBC. manage-skill è un progetto indipendente,
+"Claude" e "Anthropic" sono marchi di Anthropic PBC. c-manage-skill è un progetto indipendente,
 non affiliato ad Anthropic né approvato da Anthropic.
 
 
@@ -40,7 +40,7 @@ non affiliato ad Anthropic né approvato da Anthropic.
 English
 ===============================================================================
 
-manage-skill - catalog, export and sync of Claude skills
+c-manage-skill - catalog, export and sync of Claude skills
 Copyright (C) 2026 Quirino Scaramastra
 
 This program is free software: you can redistribute it and/or modify it under
@@ -60,7 +60,7 @@ SPDX identifier: GPL-3.0-or-later
 
 Third-party components
 ----------------------
-manage-skill uses these components, each under its own license, compatible
+c-manage-skill uses these components, each under its own license, compatible
 with the GPL v3:
 
   - Anthropic Python SDK (anthropic)   MIT License             https://github.com/anthropics/anthropic-sdk-python
@@ -71,10 +71,10 @@ The program does not include these libraries: it uses them when they are
 installed on the system or in the .venv environment.
 
 The skills managed by the program (yours and those of third parties) are NOT
-part of manage-skill and remain under their authors' licenses. Third-party
-skills in manageskill/terze-parti/ keep the license stated in their source.
+part of c-manage-skill and remain under their authors' licenses. Third-party
+skills in c_manage_skill/terze-parti/ keep the license stated in their source.
 The program reads and exports only the user's own skills: Anthropic's skills
 (under Anthropic's proprietary license) and marketplace plugin skills are never read.
 
-"Claude" and "Anthropic" are trademarks of Anthropic PBC. manage-skill is an
+"Claude" and "Anthropic" are trademarks of Anthropic PBC. c-manage-skill is an
 independent project, not affiliated with or endorsed by Anthropic.

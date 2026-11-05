@@ -1,4 +1,4 @@
-// manage-skill: catalogo, esportazione e sincronizzazione delle skill di Claude
+// c-manage-skill: catalogo, esportazione e sincronizzazione delle skill di Claude
 // Copyright (C) 2026 Quirino Scaramastra
 // SPDX-License-Identifier: GPL-3.0-or-later
 #include "dialoghi.h"
@@ -200,7 +200,7 @@ DialogoAccount::DialogoAccount(const QJsonObject &tipi, bool keyring, QWidget *g
     m_form->addRow(L("Nota"), m_nota);
     m_form->addRow("", m_sostituisci);
     v->addLayout(m_form);
-    auto *nota = new QLabel(L("La chiave va nel portachiavi o in ~/.config/manage-skill/chiavi:\nnon compare mai nella finestra né in dati/account.json."));
+    auto *nota = new QLabel(L("La chiave va nel portachiavi o in ~/.config/c-manage-skill/chiavi:\nnon compare mai nella finestra né in dati/account.json."));
     nota->setStyleSheet("color: gray");
     v->addWidget(nota);
     auto *bottoni = new QDialogButtonBox(QDialogButtonBox::Save | QDialogButtonBox::Cancel);
@@ -267,7 +267,7 @@ DialogoConsole::DialogoConsole(Motore *motore, bool keyring, QWidget *genitore) 
     m_workspace->setPlaceholderText(L("wrkspc_… (obbligatorio se la chiave non è di un solo workspace)"));
     m_dove = new QComboBox;
     m_dove->addItem(L("portachiavi di sistema (consigliato)"), "keyring");
-    m_dove->addItem(L("file protetto ~/.config/manage-skill/chiavi (600)"), "file");
+    m_dove->addItem(L("file protetto ~/.config/c-manage-skill/chiavi (600)"), "file");
     if (!keyring) m_dove->setCurrentIndex(1);
     m_sostituisci = new QCheckBox(L("sostituisci se l'account esiste già"));
     form->addRow(L("Nome dell'account"), m_nome);
@@ -482,7 +482,7 @@ DialogoTerze::DialogoTerze(Motore *motore, const QJsonArray &account, QWidget *g
     setWindowTitle(L("Aggiungi skill di terze parti"));
     resize(900, 640);
     auto *v = new QVBoxLayout(this);
-    auto *spiega = new QLabel(L("Sorgente: repository Git (https://github.com/… o git@…), ZIP (file o https://….zip) o cartella. Le skill di terze parti possono contenere script: manage-skill non li esegue, ma controllali prima di usarle."));
+    auto *spiega = new QLabel(L("Sorgente: repository Git (https://github.com/… o git@…), ZIP (file o https://….zip) o cartella. Le skill di terze parti possono contenere script: c-manage-skill non li esegue, ma controllali prima di usarle."));
     spiega->setWordWrap(true);
     v->addWidget(spiega);
     auto *riga = new QHBoxLayout;

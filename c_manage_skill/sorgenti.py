@@ -1,4 +1,4 @@
-# manage-skill: catalogo, esportazione e sincronizzazione delle skill di Claude
+# c-manage-skill: catalogo, esportazione e sincronizzazione delle skill di Claude
 # Copyright (C) 2026 Quirino Scaramastra
 # SPDX-License-Identifier: GPL-3.0-or-later
 """Ricerca delle skill nelle varie fonti: Claude Code, progetti, plugin, copia sincronizzata da claude.ai."""
@@ -27,7 +27,7 @@ class Voce:
 
 def di_anthropic(cartella: Path) -> bool:
     """Skill di Anthropic con licenza proprietaria ("Anthropic, PBC. All rights reserved." nel file di licenza).
-    Non è dell'utente e non si può ridistribuire: manage-skill non la legge, da nessuna fonte."""
+    Non è dell'utente e non si può ridistribuire: c-manage-skill non la legge, da nessuna fonte."""
     for nome in ("LICENSE.txt", "LICENSE", "LICENSE.md"):
         try:
             testo = (cartella / nome).read_text(encoding="utf-8", errors="ignore")[:4000]
@@ -118,7 +118,7 @@ def claude_ai(cartella: Path = HOME_CLAUDE / "skills" / "synced"):
 
 
 def archivio(cartella: Path = ARCHIVIO):
-    """Pacchetti esportati da manage-skill (manageskill/archivio/<nome>/<data>/<nome>/SKILL.md)."""
+    """Pacchetti esportati da c-manage-skill (c_manage_skill/archivio/<nome>/<data>/<nome>/SKILL.md)."""
     voci = []
     if not cartella.exists():
         return voci
@@ -130,7 +130,7 @@ def archivio(cartella: Path = ARCHIVIO):
 
 
 def terze_parti(cartella: Path = TERZE):
-    """Skill di terze parti installate con manage-skill (si aggiornano dalla loro sorgente)."""
+    """Skill di terze parti installate con c-manage-skill (si aggiornano dalla loro sorgente)."""
     voci = []
     if not cartella.exists():
         return voci
@@ -179,7 +179,7 @@ def stato(v: Voce) -> dict:
                 "perche": "lo stato attiva/disattiva si vede solo su claude.ai (Impostazioni > Capacità > Skill)"}
     if v.fonte == "plugin":
         return {"stato": "plugin", "attiva": None, "perche": "dipende dal plugin"}
-    return {"stato": "non caricata", "attiva": False, "perche": "copia di manage-skill, Claude non la usa da qui"}
+    return {"stato": "non caricata", "attiva": False, "perche": "copia di c-manage-skill, Claude non la usa da qui"}
 
 
 def data_modifica(v: Voce) -> float:

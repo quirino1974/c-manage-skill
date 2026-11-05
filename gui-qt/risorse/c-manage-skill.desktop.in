@@ -1,11 +1,11 @@
 [Desktop Entry]
 Type=Application
-Name=manage-skill
+Name=c-manage-skill
 GenericName=Gestione skill di Claude
 Comment=Catalogo, esportazione e sincronizzazione delle skill di Claude
 Exec=@ESEGUIBILE@
-Icon=manage-skill
+Icon=c-manage-skill
 Terminal=false
 Categories=Development;
 Keywords=Claude;skill;Anthropic;
-StartupWMClass=manage-skill
+StartupWMClass=c-manage-skill

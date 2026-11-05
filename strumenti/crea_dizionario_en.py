@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # Copyright (C) 2026 Quirino Scaramastra
 # SPDX-License-Identifier: GPL-3.0-or-later
-"""Genera manageskill/lingue/en.json, il dizionario italiano -> inglese usato da finestra, motore e riga di comando.
+"""Genera c_manage_skill/lingue/en.json, il dizionario italiano -> inglese usato da finestra, motore e riga di comando.
 
 INTESTAZIONI: nomi delle colonne nelle tabelle del terminale. ESATTI: testi fissi (anche frammenti che la finestra compone). MODELLI: messaggi con parti variabili; nel testo
 italiano {} indica una parte variabile, nella traduzione {1}, {2}… indicano quale parte va messa e dove.
@@ -65,8 +65,8 @@ ESATTI = {
     "Account": "Account", "Id": "Id", "Versione": "Version", "Creata": "Created", "Sul PC": "On this PC", "Su claude.ai": "On claude.ai", "Errore": "Error",
     "Account <b>%1</b>: %2 skill, copia sincronizzata da Claude Code il %3.": "Account <b>%1</b>: %2 skills, copy synced by Claude Code on %3.",
     "Nessuna copia sincronizzata: apri Claude Code collegato al tuo account claude.ai.": "No synced copy: open Claude Code signed in to your claude.ai account.",
-    "<br>Le esportazioni vanno in <code>manageskill/archivio/cloud/&lt;account&gt;/&lt;data-ora&gt;/</code> con le cartelle, gli ZIP e l'indice. Per avere l'ultima versione apri Claude Code prima di esportare.":
-        "<br>Exports go to <code>manageskill/archivio/cloud/&lt;account&gt;/&lt;date-time&gt;/</code> with folders, ZIPs and index. For the latest version, open Claude Code before exporting.",
+    "<br>Le esportazioni vanno in <code>c_manage_skill/archivio/cloud/&lt;account&gt;/&lt;data-ora&gt;/</code> con le cartelle, gli ZIP e l'indice. Per avere l'ultima versione apri Claude Code prima di esportare.":
+        "<br>Exports go to <code>c_manage_skill/archivio/cloud/&lt;account&gt;/&lt;date-time&gt;/</code> with folders, ZIPs and index. For the latest version, open Claude Code before exporting.",
     "Esportazione delle skill del cloud…": "Exporting cloud skills…", "✓ %1: %2 skill esportate in %3": "✓ %1: %2 skills exported to %3",
     "   nessuna cambiata rispetto all'esportazione precedente": "   none changed since the previous export", "   nuove o cambiate: ": "   new or changed: ",
     "Esportazione": "Export", "Esportazione completata": "Export complete", "Esportazione salvata in\n": "Export saved in\n",
@@ -79,8 +79,8 @@ ESATTI = {
         "No skills found: set up an account with \"Set up API account (Claude Console)\", or the account has no custom skills.",
     "Account API": "API account",
     # terze parti
-    "Skill prese da altri (repository Git, ZIP, cartelle). Restano in manageskill/terze-parti/: \"Aggiorna dalla sorgente\" scarica le nuove versioni, \"Sincronizza\" le porta negli account scelti. Gli script non vengono mai eseguiti da manage-skill: controllali prima di usare la skill.":
-        "Skills taken from others (Git repositories, ZIPs, folders). They live in manageskill/terze-parti/: \"Update from source\" downloads new versions, \"Sync\" brings them to the chosen accounts. manage-skill never runs their scripts: check them before using the skill.",
+    "Skill prese da altri (repository Git, ZIP, cartelle). Restano in c_manage_skill/terze-parti/: \"Aggiorna dalla sorgente\" scarica le nuove versioni, \"Sincronizza\" le porta negli account scelti. Gli script non vengono mai eseguiti da c-manage-skill: controllali prima di usare la skill.":
+        "Skills taken from others (Git repositories, ZIPs, folders). They live in c_manage_skill/terze-parti/: \"Update from source\" downloads new versions, \"Sync\" brings them to the chosen accounts. c-manage-skill never runs their scripts: check them before using the skill.",
     "Aggiungi…": "Add…", "Aggiorna dalla sorgente": "Update from source", "Destinazioni…": "Destinations…",
     "Sincronizza con gli account": "Sync with accounts", "forza": "force",
     "Aggiorna: sostituisce anche le copie modificate qui.\nSincronizza: sostituisce le copie modificate a mano negli account.\nLe copie sostituite vanno sempre in archivio.":
@@ -98,8 +98,8 @@ ESATTI = {
     "ok": "ok", "modificata qui": "modified here", "cartella mancante": "folder missing",
     # account
     "Dove": "Where", "Chiave": "Key", "Nota": "Note", "Nuovo account…": "New account…", "Prova": "Test", "Cambia chiave…": "Change key…",
-    "Le chiavi stanno nel portachiavi di sistema o in ~/.config/manage-skill/chiavi (permessi 600): non compaiono mai qui né in dati/account.json.":
-        "Keys are kept in the system keyring or in ~/.config/manage-skill/chiavi (permissions 600): they never appear here or in dati/account.json.",
+    "Le chiavi stanno nel portachiavi di sistema o in ~/.config/c-manage-skill/chiavi (permessi 600): non compaiono mai qui né in dati/account.json.":
+        "Keys are kept in the system keyring or in ~/.config/c-manage-skill/chiavi (permissions 600): they never appear here or in dati/account.json.",
     "Skill in un account API": "Skills in an API account", "anche quelle di Anthropic": "include Anthropic's", "Elenca": "List",
     "Elimina la selezionata…": "Delete selected…", "Seleziona un account nella tabella.": "Select an account in the table.",
     "Seleziona un account api nella tabella.": "Select an api account in the table.", "Prova account": "Test account",
@@ -111,17 +111,17 @@ ESATTI = {
     " con TUTTE le sue versioni?\nNon si può annullare.\n\nScrivi il nome della skill per confermare:": " with ALL its versions?\nThis cannot be undone.\n\nType the skill name to confirm:",
     "nessun account api": "no api account",
     # esportazioni
-    "Apri l'archivio": "Open archive", "Esportazioni del cloud (manageskill/archivio/cloud/)": "Cloud exports (manageskill/archivio/cloud/)",
+    "Apri l'archivio": "Open archive", "Esportazioni del cloud (c_manage_skill/archivio/cloud/)": "Cloud exports (c_manage_skill/archivio/cloud/)",
     "Data": "Date", "Skill": "Skills", "Cambiate": "Changed", "Saltate": "Skipped", "Sincronizzate il": "Synced on", "Cartella": "Folder",
-    "Apri l'indice": "Open index", "Archivio (manageskill/archivio/)": "Archive (manageskill/archivio/)",
+    "Apri l'indice": "Open index", "Archivio (c_manage_skill/archivio/)": "Archive (c_manage_skill/archivio/)",
     "Seleziona un'esportazione.": "Select an export.", "Archivio: ": "Archive: ", "\nCloud: ": "\nCloud: ",
     # informazioni
-    "Informazioni su manage-skill": "About manage-skill", "Licenza completa": "Full license", "Informazioni su Qt": "About Qt",
+    "Informazioni su c-manage-skill": "About c-manage-skill", "Licenza completa": "Full license", "Informazioni su Qt": "About Qt",
     "Copyright (C) 2026 Quirino Scaramastra": "Copyright (C) 2026 Quirino Scaramastra",
-    "<h2 style='margin:0'>manage-skill</h2><p style='margin:2px 0'>Versione %1 · interfaccia Qt %2</p><p style='margin:6px 0'>Catalogo, esportazione e sincronizzazione delle skill di Claude.</p><p style='margin:6px 0'><b>%3</b></p>":
-        "<h2 style='margin:0'>manage-skill</h2><p style='margin:2px 0'>Version %1 · Qt interface %2</p><p style='margin:6px 0'>Catalog, export and sync of Claude skills.</p><p style='margin:6px 0'><b>%3</b></p>",
-    "<p>Questo programma è <b>software libero</b>: puoi ridistribuirlo e/o modificarlo secondo i termini della <b>GNU General Public License</b> pubblicata dalla Free Software Foundation, nella versione 3 della licenza o (a tua scelta) in una qualsiasi versione successiva.</p><p>Questo programma è distribuito nella speranza che sia utile, ma <b>SENZA ALCUNA GARANZIA</b>, nemmeno la garanzia implicita di COMMERCIABILITÀ o di IDONEITÀ A UNO SCOPO PARTICOLARE. Per i dettagli vedi la <a href='https://www.gnu.org/licenses/gpl-3.0.html'>GNU General Public License</a>.</p><p><b>Componenti di terze parti</b><br>Anthropic Python SDK (MIT) · Qt 6 (LGPL v3) · Python (PSF).</p><p>Le skill gestite restano sotto la licenza dei rispettivi autori. \"Claude\" e \"Anthropic\" sono marchi di Anthropic PBC: manage-skill è un progetto indipendente, non affiliato ad Anthropic.</p><p style='color:gray'>SPDX: GPL-3.0-or-later · file LICENSE e COPYRIGHT nella cartella del programma.</p>":
-        "<p>This program is <b>free software</b>: you can redistribute it and/or modify it under the terms of the <b>GNU General Public License</b> as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.</p><p>This program is distributed in the hope that it will be useful, but <b>WITHOUT ANY WARRANTY</b>; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the <a href='https://www.gnu.org/licenses/gpl-3.0.html'>GNU General Public License</a> for more details.</p><p><b>Third-party components</b><br>Anthropic Python SDK (MIT) · Qt 6 (LGPL v3) · Python (PSF).</p><p>Managed skills remain under their authors' licenses. \"Claude\" and \"Anthropic\" are trademarks of Anthropic PBC: manage-skill is an independent project, not affiliated with Anthropic.</p><p style='color:gray'>SPDX: GPL-3.0-or-later · LICENSE and COPYRIGHT files in the program folder.</p>",
+    "<h2 style='margin:0'>c-manage-skill</h2><p style='margin:2px 0'>Versione %1 · interfaccia Qt %2</p><p style='margin:6px 0'>Catalogo, esportazione e sincronizzazione delle skill di Claude.</p><p style='margin:6px 0'><b>%3</b></p>":
+        "<h2 style='margin:0'>c-manage-skill</h2><p style='margin:2px 0'>Version %1 · Qt interface %2</p><p style='margin:6px 0'>Catalog, export and sync of Claude skills.</p><p style='margin:6px 0'><b>%3</b></p>",
+    "<p>Questo programma è <b>software libero</b>: puoi ridistribuirlo e/o modificarlo secondo i termini della <b>GNU General Public License</b> pubblicata dalla Free Software Foundation, nella versione 3 della licenza o (a tua scelta) in una qualsiasi versione successiva.</p><p>Questo programma è distribuito nella speranza che sia utile, ma <b>SENZA ALCUNA GARANZIA</b>, nemmeno la garanzia implicita di COMMERCIABILITÀ o di IDONEITÀ A UNO SCOPO PARTICOLARE. Per i dettagli vedi la <a href='https://www.gnu.org/licenses/gpl-3.0.html'>GNU General Public License</a>.</p><p><b>Componenti di terze parti</b><br>Anthropic Python SDK (MIT) · Qt 6 (LGPL v3) · Python (PSF).</p><p>Le skill gestite restano sotto la licenza dei rispettivi autori. \"Claude\" e \"Anthropic\" sono marchi di Anthropic PBC: c-manage-skill è un progetto indipendente, non affiliato ad Anthropic.</p><p style='color:gray'>SPDX: GPL-3.0-or-later · file LICENSE e COPYRIGHT nella cartella del programma.</p>":
+        "<p>This program is <b>free software</b>: you can redistribute it and/or modify it under the terms of the <b>GNU General Public License</b> as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.</p><p>This program is distributed in the hope that it will be useful, but <b>WITHOUT ANY WARRANTY</b>; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the <a href='https://www.gnu.org/licenses/gpl-3.0.html'>GNU General Public License</a> for more details.</p><p><b>Third-party components</b><br>Anthropic Python SDK (MIT) · Qt 6 (LGPL v3) · Python (PSF).</p><p>Managed skills remain under their authors' licenses. \"Claude\" and \"Anthropic\" are trademarks of Anthropic PBC: c-manage-skill is an independent project, not affiliated with Anthropic.</p><p style='color:gray'>SPDX: GPL-3.0-or-later · LICENSE and COPYRIGHT files in the program folder.</p>",
     # dialoghi
     "Chiudi": "Close", "Annulla": "Cancel", "Confronta le copie file per file": "Compare copies file by file",
     "<p>Caricamento…</p>": "<p>Loading…</p>", " file · ": " files · ", " KB · impronta ": " KB · fingerprint ",
@@ -138,13 +138,13 @@ ESATTI = {
     "Endpoint": "Endpoint", "Sfoglia…": "Browse…", "Cartella delle skill": "Skills folder",
     "portachiavi di sistema": "system keyring", "file protetto (600)": "protected file (600)", "profilo della CLI ant": "ant CLI profile",
     "variabile d'ambiente": "environment variable", "sostituisci se esiste già": "replace if it already exists",
-    "La chiave va nel portachiavi o in ~/.config/manage-skill/chiavi:\nnon compare mai nella finestra né in dati/account.json.": "The key goes to the keyring or to ~/.config/manage-skill/chiavi:\nit never appears in the window or in dati/account.json.",
+    "La chiave va nel portachiavi o in ~/.config/c-manage-skill/chiavi:\nnon compare mai nella finestra né in dati/account.json.": "The key goes to the keyring or to ~/.config/c-manage-skill/chiavi:\nit never appears in the window or in dati/account.json.",
     "Salva account": "Save account",
     "Account API della Claude Console": "Claude Console API account",
     "<p>Serve una <b>chiave API</b> della Claude Console (platform.claude.com):<br>Settings &gt; API keys &gt; Create key, nel workspace che vuoi leggere. Non usare una chiave Admin.</p><p>La chiave viene provata subito sulla Skills API e <b>salvata solo se funziona</b>, nel portachiavi di sistema o in un file con permessi 600. Non compare mai nella finestra, nei registri o in dati/account.json.</p><p style='color:gray'>Le skill della Console (API) e quelle di claude.ai sono archivi separati: la scansione mostra le skill dell'organizzazione o del workspace della chiave.</p>":
         "<p>You need a Claude Console <b>API key</b> (platform.claude.com):<br>Settings &gt; API keys &gt; Create key, in the workspace you want to read. Do not use an Admin key.</p><p>The key is tested right away against the Skills API and <b>saved only if it works</b>, in the system keyring or in a file with permissions 600. It never appears in the window, in logs or in dati/account.json.</p><p style='color:gray'>Console (API) skills and claude.ai skills are separate stores: the scan shows the skills of the key's organization or workspace.</p>",
     "wrkspc_… (obbligatorio se la chiave non è di un solo workspace)": "wrkspc_… (required if the key is not tied to a single workspace)",
-    "portachiavi di sistema (consigliato)": "system keyring (recommended)", "file protetto ~/.config/manage-skill/chiavi (600)": "protected file ~/.config/manage-skill/chiavi (600)",
+    "portachiavi di sistema (consigliato)": "system keyring (recommended)", "file protetto ~/.config/c-manage-skill/chiavi (600)": "protected file ~/.config/c-manage-skill/chiavi (600)",
     "sostituisci se l'account esiste già": "replace if the account already exists", "Nome dell'account": "Account name",
     "Salva la chiave nel": "Save the key in", "Verifica e salva": "Verify and save", "Verifica della chiave sulla Skills API…": "Checking the key against the Skills API…",
     "Modifica ": "Edit ", "● Modifica ": "● Edit ", "Nuovo file…": "New file…", "Salva (Ctrl+S)": "Save (Ctrl+S)", "Modifiche non salvate": "Unsaved changes",
@@ -154,8 +154,8 @@ ESATTI = {
     "Nuovo file": "New file", "Percorso del file nella skill (es. references/note.md):": "File path inside the skill (e.g. references/notes.md):",
     " (nuovo)": " (new)", "Salvataggio non riuscito": "Save failed", "Salvato, con avvisi": "Saved, with warnings", "• possibile segreto in ": "• possible secret in ",
     "Account in cui sincronizzare:": "Accounts to sync to:", "Aggiungi skill di terze parti": "Add third-party skills",
-    "Sorgente: repository Git (https://github.com/… o git@…), ZIP (file o https://….zip) o cartella. Le skill di terze parti possono contenere script: manage-skill non li esegue, ma controllali prima di usarle.":
-        "Source: Git repository (https://github.com/… or git@…), ZIP (file or https://….zip) or folder. Third-party skills may contain scripts: manage-skill does not run them, but check them before use.",
+    "Sorgente: repository Git (https://github.com/… o git@…), ZIP (file o https://….zip) o cartella. Le skill di terze parti possono contenere script: c-manage-skill non li esegue, ma controllali prima di usarle.":
+        "Source: Git repository (https://github.com/… or git@…), ZIP (file or https://….zip) or folder. Third-party skills may contain scripts: c-manage-skill does not run them, but check them before use.",
     "Cartella…": "Folder…", "ZIP…": "ZIP…", "Cerca skill": "Find skills", "Percorso": "Path", "Segreti": "Secrets",
     "Sincronizza poi in questi account (si può cambiare dopo):": "Then sync to these accounts (can be changed later):",
     "Aggiungi le selezionate": "Add selected", "Cartella con le skill": "Folder with skills", "ZIP con le skill": "ZIP with skills",
@@ -168,7 +168,7 @@ ESATTI = {
     "su claude.ai": "on claude.ai", "non caricata": "not loaded", "sì": "yes", "no": "no",
     "caricata da Claude Code": "loaded by Claude Code", "disable-model-invocation: true nel frontmatter": "disable-model-invocation: true in the frontmatter",
     "lo stato attiva/disattiva si vede solo su claude.ai (Impostazioni > Capacità > Skill)": "the on/off state is only visible on claude.ai (Settings > Capabilities > Skills)",
-    "dipende dal plugin": "depends on the plugin", "copia di manage-skill, Claude non la usa da qui": "manage-skill copy, Claude does not use it from here",
+    "dipende dal plugin": "depends on the plugin", "copia di c-manage-skill, Claude non la usa da qui": "c-manage-skill copy, Claude does not use it from here",
     "Social e post": "Social and posts", "Posta e messaggi": "Mail and messages", "Finanza": "Finance", "Carriera e formazione": "Career and learning",
     "Riunioni e lavoro": "Meetings and work", "Sito e SEO": "Website and SEO", "Documenti": "Documents", "Browser e computer": "Browser and computer",
     "Ricerca": "Research", "Sviluppo software": "Software development", "Strumenti di Claude": "Claude tools", "Altro": "Other",
@@ -226,8 +226,8 @@ ESATTI = {
     "Account o workspace della Claude API (Skills API, chiave API)": "Claude API account or workspace (Skills API, API key)",
     "Cartella di skill di Claude Code (~/.claude/skills o <progetto>/.claude/skills)": "Claude Code skills folder (~/.claude/skills or <project>/.claude/skills)",
     "Account claude.ai: prepara gli ZIP da caricare da Impostazioni > Capacità > Skill": "claude.ai account: prepares ZIPs to upload from Settings > Capabilities > Skills",
-    "Nessuna cartella: gli ZIP vanno in manageskill/archivio/_da-caricare": "No folder: ZIPs go to manageskill/archivio/_da-caricare",
-    "nessuna cartella: gli ZIP vanno in manageskill/archivio/_da-caricare": "no folder: ZIPs go to manageskill/archivio/_da-caricare",
+    "Nessuna cartella: gli ZIP vanno in c_manage_skill/archivio/_da-caricare": "No folder: ZIPs go to c_manage_skill/archivio/_da-caricare",
+    "nessuna cartella: gli ZIP vanno in c_manage_skill/archivio/_da-caricare": "no folder: ZIPs go to c_manage_skill/archivio/_da-caricare",
     "verrà creata al primo import": "will be created on first import", "non esiste ancora (verrà creata al primo import)": "does not exist yet (will be created on first import)",
     "esiste": "exists", "Account API": "API account",
     # ---------------------------------------------------------------- prompt per ricreare una skill
@@ -254,7 +254,7 @@ ESATTI = {
     "controlla le regole della Skills API (nome, descrizione, dimensione)": "check the Skills API rules (name, description, size)", "nome, cartella o ZIP": "name, folder or ZIP",
     "cerca chiavi, token e password nei file di una skill": "look for keys, tokens and passwords in a skill's files",
     "tutte le skill di Claude Code e dei progetti": "all Claude Code and project skills",
-    "esporta in manageskill/archivio/ (cartella + ZIP + skill.json)": "export to manageskill/archivio/ (folder + ZIP + skill.json)",
+    "esporta in c_manage_skill/archivio/ (cartella + ZIP + skill.json)": "export to c_manage_skill/archivio/ (folder + ZIP + skill.json)",
     "porta skill in un account (api, claude-code, claude-ai)": "bring skills into an account (api, claude-code, claude-ai)",
     "nomi, cartelle o ZIP": "names, folders or ZIPs", "fonte da cui prendere la skill": "source to take the skill from", "tutte le skill create da te": "all skills you created",
     "tutte, comprese quelle di Anthropic": "all, including Anthropic's", "procede anche se il controllo segreti trova qualcosa": "proceed even if the secret check finds something",
@@ -275,11 +275,11 @@ ESATTI = {
     "riscarica dalla sorgente le skill cambiate": "re-download changed skills from the source", "sostituisce anche le copie modificate qui": "also replace copies modified here",
     "account in cui sincronizzare una skill": "accounts to sync a skill to", "porta le skill negli account di destinazione": "bring skills into their destination accounts",
     "solo questo account": "only this account", "sostituisce copie modificate a mano negli account": "replace copies modified by hand in the accounts",
-    "skill dell'account claude.ai: catalogo ed esportazione in manageskill/archivio/cloud/": "claude.ai account skills: catalog and export to manageskill/archivio/cloud/",
+    "skill dell'account claude.ai: catalogo ed esportazione in c_manage_skill/archivio/cloud/": "claude.ai account skills: catalog and export to c_manage_skill/archivio/cloud/",
     "catalogo delle skill claude.ai": "catalog of claude.ai skills", "solo le tue": "yours only", "anche i metadati delle skill negli account API": "also the metadata of skills in API accounts",
-    "fotografa le skill in manageskill/archivio/cloud/<account>/<data-ora>/": "snapshot the skills into manageskill/archivio/cloud/<account>/<date-time>/",
+    "fotografa le skill in c_manage_skill/archivio/cloud/<account>/<data-ora>/": "snapshot the skills into c_manage_skill/archivio/cloud/<account>/<date-time>/",
     "nomi delle skill (vuoto con --mie o --tutte)": "skill names (empty with --mie or --tutte)", "tutte le tue": "all yours", "anche quelle di Anthropic": "include Anthropic's",
-    "esportazioni presenti in manageskill/archivio/cloud/": "exports in manageskill/archivio/cloud/",
+    "esportazioni presenti in c_manage_skill/archivio/cloud/": "exports in c_manage_skill/archivio/cloud/",
     "importa le skill di claude.ai in un account API (nuove o nuove versioni)": "import claude.ai skills into an API account (new skills or new versions)",
     "account di tipo api (ms account elenco)": "api account (ms account elenco)", "solo queste (predefinito: tutte le tue)": "only these (default: all yours)",
     "mostra cosa farebbe, senza caricare nulla": "show what it would do, without uploading anything", "ricarica anche le skill già aggiornate": "re-upload skills that are already up to date",
@@ -339,7 +339,7 @@ MODELLI = {
     "git clone non riuscito: {}": "git clone failed: {1}", "ZIP non sicuro: percorso {}": "Unsafe ZIP: path {1}",
     "Nome di skill non utilizzabile come cartella: {}": "Skill name not usable as a folder: {1}", "Account sconosciuti: {}": "Unknown accounts: {1}",
     "{}: lo ZIP deve contenere un solo SKILL.md (alla radice o in una cartella)": "{1}: the ZIP must contain a single SKILL.md (at the root or in a folder)",
-    "{}: skill di Anthropic con licenza proprietaria: manage-skill non la esporta né la importa": "{1}: Anthropic skill under a proprietary license: manage-skill does not export or import it",
+    "{}: skill di Anthropic con licenza proprietaria: c-manage-skill non la esporta né la importa": "{1}: Anthropic skill under a proprietary license: c-manage-skill does not export or import it",
     "{}: manca SKILL.md": "{1}: SKILL.md is missing", "{}: {}": "{1}: {2}",
     "name '{}': solo lettere minuscole, numeri e trattini, massimo 64 caratteri": "name '{1}': lowercase letters, digits and hyphens only, at most 64 characters",
     "name '{}': non può contenere le parole riservate {}": "name '{1}': cannot contain the reserved words {2}",
@@ -385,7 +385,7 @@ def sostituto(en: str) -> str:
 
 
 def main():
-    dest = Path(__file__).resolve().parent.parent / "manageskill" / "lingue" / "en.json"
+    dest = Path(__file__).resolve().parent.parent / "c_manage_skill" / "lingue" / "en.json"
     dest.parent.mkdir(parents=True, exist_ok=True)
     modelli = sorted(MODELLI.items(), key=lambda kv: -len(kv[0]))  # i più specifici prima
     dati = {"lingua": "en", "nome": "English", "esatti": ESATTI, "intestazioni": INTESTAZIONI,

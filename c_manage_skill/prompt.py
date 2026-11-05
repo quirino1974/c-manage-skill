@@ -1,4 +1,4 @@
-# manage-skill: catalogo, esportazione e sincronizzazione delle skill di Claude
+# c-manage-skill: catalogo, esportazione e sincronizzazione delle skill di Claude
 # Copyright (C) 2026 Quirino Scaramastra
 # SPDX-License-Identifier: GPL-3.0-or-later
 """Prompt per ricreare una skill: un testo da incollare in Claude (claude.ai, Claude Code o un'altra chat)
@@ -46,7 +46,7 @@ TESTI = {
         "binario": "file binario, {kb} KB: non incluso, va copiato a parte",
         "grande": "{kb} KB: troppo grande per il prompt, va copiato a parte",
         "da_scrivere": "da riscrivere seguendo le istruzioni della skill",
-        "oscurato": "[OSCURATO da manage-skill: possibile segreto ({tipo}). Inserisci qui il valore corretto.]",
+        "oscurato": "[OSCURATO da c-manage-skill: possibile segreto ({tipo}). Inserisci qui il valore corretto.]",
         "avviso_segreti": "Nota: {n} righe sono state oscurate perché sembravano contenere chiavi, token o password.",
         "fine": "Alla fine verifica che `SKILL.md` abbia `name: {nome}` e una `description` sotto i 1024 caratteri.",
     },
@@ -71,7 +71,7 @@ TESTI = {
         "binario": "binary file, {kb} KB: not included, copy it separately",
         "grande": "{kb} KB: too large for the prompt, copy it separately",
         "da_scrivere": "to be written following the skill's instructions",
-        "oscurato": "[REDACTED by manage-skill: possible secret ({tipo}). Put the correct value here.]",
+        "oscurato": "[REDACTED by c-manage-skill: possible secret ({tipo}). Put the correct value here.]",
         "avviso_segreti": "Note: {n} lines were redacted because they seemed to contain keys, tokens or passwords.",
         "fine": "At the end check that `SKILL.md` has `name: {nome}` and a `description` under 1024 characters.",
     },

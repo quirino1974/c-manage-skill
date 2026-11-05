@@ -1,4 +1,4 @@
-# manage-skill: catalogo, esportazione e sincronizzazione delle skill di Claude
+# c-manage-skill: catalogo, esportazione e sincronizzazione delle skill di Claude
 # Copyright (C) 2026 Quirino Scaramastra
 # SPDX-License-Identifier: GPL-3.0-or-later
 """Funzioni di gestione usate dalle interfacce (finestra Qt, tramite motore.py): ricevono e restituiscono dati JSON."""
@@ -160,7 +160,7 @@ def salva_file(d):
         raise Errore(f"{d['file']} non esiste più.")
     copia = pacchetti.esporta(sorgenti.Voce(v.skill, "backup", v.origine, v.percorso), forza_segreti=True)
     p.parent.mkdir(parents=True, exist_ok=True)
-    tmp = p.with_name(p.name + ".manage-skill.tmp")
+    tmp = p.with_name(p.name + ".c-manage-skill.tmp")
     tmp.write_text(testo, encoding="utf-8")
     if p.exists():
         os.chmod(tmp, p.stat().st_mode & 0o777)
@@ -325,7 +325,7 @@ def prova_account(d):
     if a["tipo"] != "api":
         c = account.cartella(a) if a.get("cartella") else None
         return {"ok": True, "messaggio": f"Cartella {c}: {'esiste' if c.exists() else 'verrà creata al primo import'}" if c
-                else "Nessuna cartella: gli ZIP vanno in manageskill/archivio/_da-caricare"}
+                else "Nessuna cartella: gli ZIP vanno in c_manage_skill/archivio/_da-caricare"}
     try:
         n = len(api_anthropic.elenca(a))
         chiave = chiavi.leggi(a["nome"], a.get("chiave", "keyring"))

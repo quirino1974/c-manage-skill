@@ -1,4 +1,4 @@
-// manage-skill: catalogo, esportazione e sincronizzazione delle skill di Claude
+// c-manage-skill: catalogo, esportazione e sincronizzazione delle skill di Claude
 // Copyright (C) 2026 Quirino Scaramastra
 // SPDX-License-Identifier: GPL-3.0-or-later
 #include "stile.h"
@@ -97,8 +97,8 @@ QString arancio() { return g_scuro ? "#F0B44C" : "#A85A00"; }
 QString rosso() { return g_scuro ? "#FF8A80" : "#B42318"; }
 
 void applica(QApplication &app) {
-    // MANAGE_SKILL_TEMA=chiaro|scuro forza il tema; altrimenti segue quello del sistema
-    const QString tema = qEnvironmentVariable("MANAGE_SKILL_TEMA").toLower();
+    // C_MANAGE_SKILL_TEMA=chiaro|scuro forza il tema; altrimenti segue quello del sistema
+    const QString tema = qEnvironmentVariable("C_MANAGE_SKILL_TEMA").toLower();
     const auto schema = QGuiApplication::styleHints()->colorScheme();
     if (tema == "scuro" || tema == "chiaro")
         g_scuro = tema == "scuro";
