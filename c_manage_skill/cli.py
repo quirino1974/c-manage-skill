@@ -447,11 +447,11 @@ class _Versione(argparse.Action):
 
     def __call__(self, parser, namespace, values, option_string=None):
         if lingua.attuale() == "en":
-            testo = (f"c-manage-skill {__version__}\n{COPYRIGHT}\n"
+            testo = (f"c-manage-skill {__version__} (versione alfa)\n{COPYRIGHT}\n"
                      "License GNU GPL v3 or later <https://www.gnu.org/licenses/gpl-3.0.html>.\n"
                      "This is free software, with no warranty. Details in the LICENSE and COPYRIGHT files.")
         else:
-            testo = (f"c-manage-skill {__version__}\n{COPYRIGHT}\n"
+            testo = (f"c-manage-skill {__version__} (versione alfa)\n{COPYRIGHT}\n"
                      "Licenza GNU GPL v3 o successiva <https://www.gnu.org/licenses/gpl-3.0.html>.\n"
                      "Questo è software libero, senza alcuna garanzia. Dettagli nei file LICENSE e COPYRIGHT.")
         _print(testo)

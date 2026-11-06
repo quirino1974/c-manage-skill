@@ -1,6 +1,7 @@
 c-manage-skill: manuale d'uso
 =============================
 Autore: Quirino Scaramastra
+Versione alfa: non usare in produzione.
 
 c-manage-skill esporta, cataloga e descrive le skill di Claude, e le sposta tra account diversi gestendo le chiavi API. Si usa dalla riga di comando (ms) o dalla finestra Qt (c-manage-skill-qt).
 
@@ -9,7 +10,7 @@ Copyright (C) 2026 Quirino Scaramastra. c-manage-skill è software libero, distr
 0. Il laboratorio in breve
 --------------------------
 
-c-manage-skill è un laboratorio: un modo sperimentale di tenere in ordine le skill di Claude, non un prodotto finito. Una skill è una cartella con un file SKILL.md e i file accessori che Claude usa per svolgere un compito. Con c-manage-skill si trovano, si confrontano, si controllano, si esportano e si spostano tra posti diversi: il PC, i progetti, claude.ai e gli account API.
+c-manage-skill è un laboratorio in versione alfa: un modo sperimentale di tenere in ordine le skill di Claude, non un prodotto finito. Una skill è una cartella con un file SKILL.md e i file accessori che Claude usa per svolgere un compito. Con c-manage-skill si trovano, si confrontano, si controllano, si esportano e si spostano tra posti diversi: il PC, i progetti, claude.ai e gli account API.
 
 A cosa serve
 

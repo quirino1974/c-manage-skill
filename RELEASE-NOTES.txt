@@ -1,6 +1,7 @@
 c-manage-skill: note di rilascio
 ================================
 Autore: Quirino Scaramastra
+Versione alfa: non usare in produzione.
 
 Rinominato in c-manage-skill, 5 novembre 2026
 ---------------------------------------------
@@ -18,7 +19,7 @@ Rinominato in c-manage-skill, 5 novembre 2026
 - Una skill con la licenza proprietaria di Anthropic ("Anthropic, PBC. All rights reserved." nel file LICENSE) viene riconosciuta e rifiutata anche se è copiata in un'altra cartella, passata come percorso o ZIP, o si trova in una sorgente di terze parti.
 - I plugin dei marketplace non vengono più letti in nessun caso.
 
-1.1.0, 18 ottobre 2026
+1.1.0, 18 ottobre 2026 (versione alfa)
 ----------------------
 
 Prompt per ricreare una skill
